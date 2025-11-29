@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interactive Demo - Iterative Refinement Improves Compositional Image Generation</title>
+    <link rel="icon" href="./static/images/favicon.svg?v=3">
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap");
+
+      :root {
+        color-scheme: light;
+        --bg: #f6f7fb;
+        --surface: #ffffff;
+        --border: #e2e8f0;
+        --muted: #64748b;
+        --text: #0f172a;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+      }
+
+      .app-shell {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 2.5rem 1.5rem 3rem;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+
+      header {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+      }
+
+      header h1 {
+        margin: 0;
+        font-size: clamp(1.6rem, 3vw, 2.4rem);
+        font-weight: 600;
+        line-height: 1.2;
+      }
+
+      header p {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      .row-labels {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 1rem;
+        font-size: 0.8rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      .prompt-block {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 1.3rem 1.4rem 1.6rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.9rem;
+        box-shadow: 0 18px 40px rgba(15, 23, 42, 0.07);
+      }
+
+      .prompt-text {
+        margin: 0;
+        font-size: 1.1rem;
+        line-height: 1.5;
+      }
+
+      .prompt-text strong {
+        font-weight: 600;
+        text-decoration: underline;
+      }
+
+      .model-row {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 1rem;
+      }
+
+      .model-card {
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        overflow: hidden;
+        background: #fff;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .model-card figure {
+        margin: 0;
+        position: relative;
+        padding-top: 100%;
+        background: #f1f5f9;
+      }
+
+      .model-card img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .image-note {
+        font-size: 0.82rem;
+        color: #b91c1c;
+        text-align: center;
+        padding: 0 0.6rem 0.6rem;
+      }
+
+      .image-note--success {
+        color: #15803d;
+      }
+
+      .image-note--failure {
+        color: #b91c1c;
+      }
+
+      .trace-toggle {
+        margin: 0.6rem auto 0;
+        border: none;
+        border-radius: 999px;
+        padding: 0.45rem 1.2rem;
+        font-weight: 600;
+        background: linear-gradient(135deg, #4338ca, #818cf8);
+        color: #fff;
+        cursor: pointer;
+        box-shadow: 0 14px 28px rgba(79, 70, 229, 0.35);
+        transition: transform 120ms ease, box-shadow 120ms ease;
+        display: block;
+      }
+
+      .trace-toggle:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 18px 35px rgba(79, 70, 229, 0.45);
+      }
+
+      .trace-toggle:active {
+        transform: translateY(0);
+        box-shadow: 0 14px 28px rgba(79, 70, 229, 0.35);
+      }
+
+      .trace-panel {
+        margin-top: 1rem;
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        background: var(--surface);
+        overflow: hidden;
+      }
+
+      .trace-panel[data-visible="false"] {
+        display: none;
+      }
+
+      .trace-panel h4 {
+        margin: 0;
+        padding: 1rem;
+        font-size: 1.2rem;
+        font-weight: 600;
+        background: var(--bg);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .trace-steps {
+        padding: 1rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+      }
+
+      .trace-step {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .trace-step figure {
+        margin: 0;
+        position: relative;
+        padding-top: 100%;
+        background: #f1f5f9;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      .trace-step img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .trace-step p {
+        margin: 0;
+        font-size: 0.9rem;
+        line-height: 1.4;
+      }
+
+      .back-button {
+        position: fixed;
+        top: 1.5rem;
+        left: 1.5rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 0.75rem 1rem;
+        text-decoration: none;
+        color: var(--text);
+        font-weight: 500;
+        box-shadow: 0 8px 20px rgba(15, 23, 42, 0.1);
+        transition: all 120ms ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .back-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 25px rgba(15, 23, 42, 0.15);
+      }
+
+      @media (max-width: 768px) {
+        .app-shell {
+          padding: 1.5rem 1rem 2rem;
+        }
+
+        .row-labels,
+        .model-row {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 0.75rem;
+        }
+
+        .trace-steps {
+          grid-template-columns: 1fr;
+        }
+
+        .back-button {
+          position: static;
+          margin-bottom: 1rem;
+          align-self: flex-start;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app-shell">
+      <a href="./index.html" class="back-button">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m15 18-6-6 6-6"/>
+        </svg>
+        Back to Main Site
+      </a>
+
+      <header>
+        <h1>Interactive Demo</h1>
+        <p>Explore iterative refinement in action across challenging compositional prompts</p>
+      </header>
+
+      <main id="gallery-root"></main>
+    </div>
+
+    <script>
+      const MODEL_COLUMNS = [
+        { name: "Qwen-Image", key: "qwen" },
+        { name: "GPT", key: "gpt" },
+        { name: "NanoBanana", key: "nano" },
+        { name: "Iter-Refine (ours)", key: "ours" },
+      ];
+
+      const SAMPLE_ROWS = [
+        {
+          prompt: "A woman sits at a table, typing on a red laptop. A black chicken with a glass-like texture stands next to her. A large spider hangs from the ceiling above them. The image has an impressionist style.",
+          images: {
+            qwen: "./static/assets/2/qwen.png",
+            gpt: "./static/assets/2/gpt.png",
+            nano: "./static/assets/2/gemini.png",
+            ours: "./static/assets/2/ours.png",
+          },
+          imageNotes: {
+            qwen: "Low aesthetic for impressionist style.",
+            gpt: "Chicken not with glass-like texture.",
+            nano: "Chicken not with glass-like texture.",
+            ours: "Aligned to prompt.",
+          },
+          imageNoteStatus: {
+            ours: "success",
+          },
+          reasoningTrace: [
+            {
+              comment: "A woman sits at a table, typing on a red laptop. A black chicken with a glass-like texture stands next to her. A large spider hangs from the ceiling above them. The image has an impressionist style.",
+              image: "./static/assets/2/step_0.png",
+            },
+            {
+              comment: "Refine the black chicken standing next to the woman on the table, ensuring it has a reflective, glass-like, jewel-like texture, while maintaining the impressionist style of the overall scene.",
+              image: "./static/assets/2/step_1.png",
+            },
+            {
+              comment: "Edit the black chicken on the table to clearly display a highly reflective, faceted, glass-like or crystalline texture, making it look like a black jewel sculpture, while preserving the impressionistic style of the surrounding scene.",
+              image: "./static/assets/2/step_2.png",
+            },
+          ],
+        },
+        {
+          promptSrc: "./static/assets/3/steps.txt",
+          images: {
+            qwen: "./static/assets/3/qwen.png",
+            gpt: "./static/assets/3/gpt.png",
+            nano: "./static/assets/3/gemini.png",
+            ours: "./static/assets/3/ours.png",
+          },
+          imageNotes: {
+            qwen: "Carrot not inside bee.",
+            gpt: "Carrot not inside bee.",
+            nano: "Carrot not inside bee.",
+            ours: "Aligned to prompt.",
+          },
+          imageNoteStatus: {
+            ours: "success",
+          },
+          reasoningTrace: [
+            {
+              image: "./static/assets/3/step_0.png",
+            },
+            {
+              image: "./static/assets/3/step_1.png",
+            },
+            {
+              image: "./static/assets/3/step_2.png",
+            },
+            {
+              image: "./static/assets/3/step_3.png",
+            },
+          ],
+        },
+        {
+          promptSrc: "./static/assets/5/prompts.txt",
+          images: {
+            qwen: "./static/assets/5/qwen.png",
+            gpt: "./static/assets/5/gpt.png",
+            nano: "./static/assets/5/gemini.png",
+            ours: "./static/assets/5/ours.png",
+          },
+          imageNotes: {
+            qwen: "Flamingo not dancing or spreading wings.",
+            gpt: "Flamingo not dancing or spreading wings.",
+            nano: "Flamingo not dancing or spreading wings.",
+            ours: "Aligned to prompt.",
+          },
+          imageNoteStatus: {
+            ours: "success",
+          },
+          reasoningTrace: [
+            {
+              image: "./static/assets/5/step_0.png",
+            },
+            {
+              image: "./static/assets/5/step_1.png",
+            },
+            {
+              image: "./static/assets/5/step_2.png",
+            },
+            {
+              image: "./static/assets/5/step_3.png",
+            },
+          ],
+        },
+        {
+          promptSrc: "./static/assets/4/step_prompts.txt",
+          images: {
+            qwen: "./static/assets/4/qwen.png",
+            gpt: "./static/assets/4/gpt.png",
+            nano: "./static/assets/4/gemini.png",
+            ours: "./static/assets/4/ours.png",
+          },
+          imageNotes: {
+            qwen: "Rabbit ears not 3, wrong colors.",
+            gpt: "Rabbit ears not 3, wrong colors.",
+            nano: "Rabbit ears not 3, wrong colors.",
+            ours: "Aligned to prompt.",
+          },
+          imageNoteStatus: {
+            ours: "success",
+          },
+          reasoningTrace: [
+            {
+              image: "./static/assets/4/step_0.png",
+            },
+            {
+              image: "./static/assets/4/step_1.png",
+            },
+            {
+              image: "./static/assets/4/step_2.png",
+            },
+            {
+              image: "./static/assets/4/step_3.png",
+            },
+            {
+              image: "./static/assets/4/step_4.png",
+            },
+          ],
+        },
+        {
+          prompt: "A realistic photo of a banana with three ears of corn attached to it, all in a kitchen setting with wooden countertops and natural lighting.",
+          images: {
+            qwen: "./static/assets/6/qwen.png",
+            gpt: "./static/assets/6/gpt.png",
+            nano: "./static/assets/6/gemini.png",
+            ours: "./static/assets/6/ours.png",
+          },
+          imageNotes: {
+            qwen: "Only 2 ears of corn.",
+            gpt: "Only 2 ears of corn.",
+            nano: "Only 2 ears of corn.",
+            ours: "Aligned to prompt.",
+          },
+          imageNoteStatus: {
+            ours: "success",
+          },
+          reasoningTrace: [
+            {
+              image: "./static/assets/6/step_0.png",
+            },
+            {
+              image: "./static/assets/6/step_1.png",
+            },
+            {
+              image: "./static/assets/6/step_2.png",
+            },
+          ],
+        },
+        {
+          prompt: "A photorealistic image of a blue elephant with pink polka dots, standing in a grassy field under a cloudy sky, with a mountain range in the background.",
+          images: {
+            qwen: "./static/assets/7/qwen.png",
+            gpt: "./static/assets/7/gpt.png",
+            nano: "./static/assets/7/gemini.png",
+            ours: "./static/assets/7/ours.png",
+          },
+          imageNotes: {
+            qwen: "Elephant not blue with pink polka dots.",
+            gpt: "Elephant not blue with pink polka dots.",
+            nano: "Elephant not blue with pink polka dots.",
+            ours: "Aligned to prompt.",
+          },
+          imageNoteStatus: {
+            ours: "success",
+          },
+          reasoningTrace: [
+            {
+              image: "./static/assets/7/step_0.png",
+            },
+            {
+              image: "./static/assets/7/step_1.png",
+            },
+            {
+              image: "./static/assets/7/step_2.png",
+            },
+          ],
+        },
+        {
+          prompt: "Create an image of a red fire hydrant with googly eyes and a party hat, standing on a beach with palm trees, wearing sunglasses and holding a surfboard.",
+          images: {
+            qwen: "./static/assets/8/qwen.png",
+            gpt: "./static/assets/8/gpt.png",
+            nano: "./static/assets/8/gemini.png",
+            ours: "./static/assets/8/ours.png",
+          },
+          imageNotes: {
+            qwen: "Missing several elements.",
+            gpt: "Missing several elements.",
+            nano: "Missing several elements.",
+            ours: "Aligned to prompt.",
+          },
+          imageNoteStatus: {
+            ours: "success",
+          },
+          reasoningTrace: [
+            {
+              image: "./static/assets/8/step_0.png",
+            },
+            {
+              image: "./static/assets/8/step_1.png",
+            },
+            {
+              image: "./static/assets/8/step_2.png",
+            },
+            {
+              image: "./static/assets/8/step_3.png",
+            },
+            {
+              image: "./static/assets/8/step_4.png",
+            },
+            {
+              image: "./static/assets/8/step_5.png",
+            },
+          ],
+        },
+      ];
+
+      const galleryRoot = document.getElementById("gallery-root");
+
+      function createModelCard(model, rowIndex, imageSrc, note, noteStatus) {
+        const card = document.createElement("article");
+        card.className = "model-card";
+
+        const figure = document.createElement("figure");
+        const img = document.createElement("img");
+        img.src = imageSrc || `https://placehold.co/400x400/e2e8f0/64748b?text=No+Image`;
+        img.alt = `${model.name} result for prompt ${rowIndex + 1}`;
+        figure.append(img);
+
+        card.append(figure);
+
+        if (note) {
+          const noteEl = document.createElement("p");
+          noteEl.className = `image-note ${noteStatus ? `image-note--${noteStatus}` : ""}`;
+          noteEl.textContent = note;
+          card.append(noteEl);
+        }
+
+        return card;
+      }
+
+      function createTracePanel(traceList, traceId) {
+        const panel = document.createElement("section");
+        panel.className = "trace-panel";
+        panel.id = traceId;
+        panel.dataset.visible = "false";
+
+        const heading = document.createElement("h4");
+        heading.textContent = "Reasoning Trace";
+        panel.append(heading);
+
+        const steps = document.createElement("div");
+        steps.className = "trace-steps";
+
+        (traceList || []).forEach((step, index) => {
+          const card = document.createElement("article");
+          card.className = "trace-step";
+
+          const figure = document.createElement("figure");
+          const img = document.createElement("img");
+          img.src = step.image || `https://placehold.co/400x400/fbe7c9/7c2d12?text=Trace+${index + 1}`;
+          img.alt = step.stage || `Trace step ${index + 1}`;
+          figure.append(img);
+
+          const caption = document.createElement("p");
+          caption.innerHTML = `<strong>Step ${index + 1}.</strong> ${step.comment || "Critic/refinement instruction not provided."}`;
+
+          card.append(figure, caption);
+          steps.append(card);
+        });
+
+        panel.append(steps);
+        return panel;
+      }
+
+      async function loadText(path) {
+        try {
+          const response = await fetch(path);
+          if (!response.ok) throw new Error("HTTP " + response.status);
+          return await response.text();
+        } catch (error) {
+          console.warn("[Gallery] Unable to load text", path, error);
+          return null;
+        }
+      }
+
+      async function renderRows() {
+        for (const [rowIndex, row] of SAMPLE_ROWS.entries()) {
+          const block = document.createElement("section");
+          block.className = "prompt-block";
+
+          const prompt = document.createElement("p");
+          prompt.className = "prompt-text";
+          if (row.promptSrc) {
+            const text = await loadText(row.promptSrc);
+            prompt.innerHTML = text ? `<strong>Prompt:</strong> ${text.trim()}` : "<strong>Prompt:</strong> Prompt unavailable.";
+          } else {
+            prompt.innerHTML = `<strong>Prompt:</strong> ${row.prompt || "Prompt unavailable."}`;
+          }
+          block.append(prompt);
+
+          const labels = document.createElement("div");
+          labels.className = "row-labels";
+          MODEL_COLUMNS.forEach((model) => {
+            const label = document.createElement("span");
+            label.textContent = model.name;
+            labels.append(label);
+          });
+          block.append(labels);
+
+          const grid = document.createElement("div");
+          grid.className = "model-row";
+          const traceId = `trace-${rowIndex}`;
+          MODEL_COLUMNS.forEach((model) => {
+            const card = createModelCard(
+              model,
+              rowIndex,
+              row.images?.[model.key],
+              row.imageNotes?.[model.key],
+              row.imageNoteStatus?.[model.key]
+            );
+            grid.append(card);
+          });
+
+          block.append(grid);
+
+          const toggle = document.createElement("button");
+          toggle.type = "button";
+          toggle.className = "trace-toggle";
+          toggle.textContent = "Show reasoning trace";
+          toggle.addEventListener("click", () => {
+            const panel = document.getElementById(traceId);
+            if (!panel) return;
+            const isVisible = panel.dataset.visible === "true";
+            panel.dataset.visible = isVisible ? "false" : "true";
+            toggle.textContent = isVisible ? "Show reasoning trace" : "Hide reasoning trace";
+          });
+          block.append(toggle);
+
+          const enrichedTrace = await Promise.all(
+            (row.reasoningTrace || []).map(async (trace) => {
+              if (trace.promptSrc) {
+                const text = await loadText(trace.promptSrc);
+                return {
+                  ...trace,
+                  comment: text?.trim() || trace.comment,
+                };
+              }
+              return trace;
+            })
+          );
+
+          const tracePanel = createTracePanel(enrichedTrace, traceId);
+          block.append(tracePanel);
+
+          galleryRoot.append(block);
+        }
+      }
+
+      renderRows();
+    </script>
+  </body>
+</html>
