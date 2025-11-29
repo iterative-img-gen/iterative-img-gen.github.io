@@ -75,4 +75,41 @@ $(document).ready(function() {
 
     bulmaSlider.attach();
 
+    // BibTeX copy functionality
+    $('#copy-bibtex').on('click', function() {
+      const bibtexText = $('#bibtex-code').text();
+      const originalContent = '<i class="fas fa-copy"></i> Copy';
+      navigator.clipboard.writeText(bibtexText).then(function() {
+        const button = $('#copy-bibtex');
+        button.html('<i class="fas fa-check"></i> Copied!');
+        button.addClass('copied');
+
+        setTimeout(function() {
+          button.html(originalContent);
+          button.removeClass('copied');
+        }, 2000);
+      }).catch(function(err) {
+        console.error('Failed to copy text: ', err);
+        // Fallback for older browsers
+        const textArea = document.createElement('textarea');
+        textArea.value = bibtexText;
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+          document.execCommand('copy');
+          const button = $('#copy-bibtex');
+          button.html('<i class="fas fa-check"></i> Copied!');
+          button.addClass('copied');
+
+          setTimeout(function() {
+            button.html(originalContent);
+            button.removeClass('copied');
+          }, 2000);
+        } catch (fallbackErr) {
+          console.error('Fallback copy failed: ', fallbackErr);
+        }
+        document.body.removeChild(textArea);
+      });
+    });
+
 })
