@@ -60,7 +60,38 @@ const SAMPLE_ROWS = [
     ],
   },
   {
-    promptSrc: "./static/assets/3/steps.txt",
+    prompt: "Four ducks are standing on the ground, and a tiny pink giraffe is standing next to them. Three novels are placed on the ground nearby. The image is in a photorealistic style.",
+    images: {
+      qwen: "./static/assets/1/qwen_1.png",
+      gpt: "./static/assets/1/gpt_1.png",
+      nano: "./static/assets/1/gemini_1.png",
+      ours: "./static/assets/1/ours_trace_step1.png",
+    },
+    imageNotes: {
+      qwen: "Incorrect num. of ducks (2 instead of 4).",
+      gpt: "Incorrect num. of ducks (3 instead of 4).",
+      nano: "Incorrect num. of ducks (3 instead of 4).",
+      ours: "Aligned to prompt.",
+    },
+    imageNoteStatus: {
+      ours: "success",
+    },
+    reasoningTrace: [
+      {
+        stage: "Step 1 · Layout",
+        comment: "Four ducks are standing on the ground, and a tiny pink giraffe is standing next to them. Three novels are placed on the ground nearby. The image is in a photorealistic style.",
+        image: "./static/assets/1/ours_trace_step0.png",
+      },
+      {
+        stage: "Step 2 · Lighting",
+        promptSrc: "./static/assets/1/prompt_1_step_1.txt",
+        image: "./static/assets/1/ours_trace_step1.png",
+      },
+    ],
+  },
+  {
+    prompt:
+      "In a watercolor painting, there is a tiny broccoli, one sushi roll, a red pizza, and four cactuses. Additionally, there is a large carrot.",
     images: {
       qwen: "./static/assets/3/qwen.png",
       gpt: "./static/assets/3/gpt.png",
@@ -68,47 +99,40 @@ const SAMPLE_ROWS = [
       ours: "./static/assets/3/ours.png",
     },
     imageNotes: {
-      qwen: "Carrot not inside bee.",
-      gpt: "Carrot not inside bee.",
-      nano: "Carrot not inside bee.",
-      ours: "Aligned to prompt.",
+      qwen: "Incorrect num. of cacti (3 instead of 4).",
+      gpt: "Brocolli is not tiny.",
+      nano: "Incorrect num. of cacti (5 instead of 4).",
+      ours: "Aligned to prompt."
     },
     imageNoteStatus: {
       ours: "success",
     },
     reasoningTrace: [
-      { image: "./static/assets/3/step_0.png" },
-      { image: "./static/assets/3/step_1.png" },
-      { image: "./static/assets/3/step_2.png" },
-      { image: "./static/assets/3/step_3.png" },
+      {
+        comment:
+          "In a watercolor painting, there is a tiny broccoli, one sushi roll, a red pizza, and four cactuses. Additionally, there is a large carrot.",
+        image: "./static/assets/3/step_0.png",
+      },
+      {
+        comment:
+          "Add one more cactus to the watercolor painting so that there are exactly four cactuses in the scene, keeping the existing large carrot, tiny broccoli, one sushi roll, and red pizza.",
+        image: "./static/assets/3/step_1.png",
+      },
+      {
+        comment:
+          "Add a tiny watercolor representation of broccoli to the image, ensuring it is positioned near the large carrot or sushi roll, while retaining the existing arrangement of the large carrot, one sushi roll, red pizza slice, and four cactuses.",
+        image: "./static/assets/3/step_2.png",
+      },
+      {
+        comment:
+          "Remove one of the two identical columnar cactuses located on the far left side of the image, ensuring exactly four distinct cactuses remain in the scene. Preserve the existing large carrot, sushi roll, red pizza slice, and tiny broccoli.",
+        image: "./static/assets/3/step_3.png",
+      },
     ],
   },
   {
-    promptSrc: "./static/assets/5/prompts.txt",
-    images: {
-      qwen: "./static/assets/5/qwen.png",
-      gpt: "./static/assets/5/gpt.png",
-      nano: "./static/assets/5/gemini.png",
-      ours: "./static/assets/5/ours.png",
-    },
-    imageNotes: {
-      qwen: "Flamingo not dancing or spreading wings.",
-      gpt: "Flamingo not dancing or spreading wings.",
-      nano: "Flamingo not dancing or spreading wings.",
-      ours: "Aligned to prompt.",
-    },
-    imageNoteStatus: {
-      ours: "success",
-    },
-    reasoningTrace: [
-      { image: "./static/assets/5/step_0.png" },
-      { image: "./static/assets/5/step_1.png" },
-      { image: "./static/assets/5/step_2.png" },
-      { image: "./static/assets/5/step_3.png" },
-    ],
-  },
-  {
-    promptSrc: "./static/assets/4/step_prompts.txt",
+    prompt:
+      "The image features a heart-shaped giraffe, a tiny pink screwdriver, and a huge robot. The screwdriver is positioned at the bottom of the robot, touching it.",
     images: {
       qwen: "./static/assets/4/qwen.png",
       gpt: "./static/assets/4/gpt.png",
@@ -116,24 +140,86 @@ const SAMPLE_ROWS = [
       ours: "./static/assets/4/ours.png",
     },
     imageNotes: {
-      qwen: "Rabbit ears not 3, wrong colors.",
-      gpt: "Rabbit ears not 3, wrong colors.",
-      nano: "Rabbit ears not 3, wrong colors.",
-      ours: "Aligned to prompt.",
+      qwen: "Screwdriver not tiny and not touching robot.",
+      gpt: "Giraffe and robot conflated.",
+      nano: "Screwdriver not touching the robot.",
+      ours: "(Failure case) Giraffe not exactly heart-shaped.",
     },
     imageNoteStatus: {
-      ours: "success",
+      ours: "failure",
     },
     reasoningTrace: [
-      { image: "./static/assets/4/step_0.png" },
-      { image: "./static/assets/4/step_1.png" },
-      { image: "./static/assets/4/step_2.png" },
-      { image: "./static/assets/4/step_3.png" },
-      { image: "./static/assets/4/step_4.png" },
+      {
+        comment:
+          "The image features a heart-shaped giraffe, a tiny pink screwdriver, and a huge robot. The screwdriver is positioned at the bottom of the robot, touching it.",
+        image: "./static/assets/4/step_0.png",
+      },
+      {
+        comment:
+          "Reposition the tiny pink screwdriver so that it is clearly touching the bottom surface of the huge robot's leg or foot.",
+        image: "./static/assets/4/step_1.png",
+      },
+      {
+        comment:
+          "Ensure the tiny pink screwdriver is visibly touching and pressed against the huge robot's foot or leg structure at the very bottom, confirming direct contact.",
+        image: "./static/assets/4/step_2.png",
+      },
+      {
+        comment:
+          "Introduce a tiny pink screwdriver lying on the ground, clearly touching and pressed against the lower armor plating or base structure of the huge robot's foot. Also, refine the giraffe's pose so that its neck and front legs clearly and symmetrically form a heart shape around its head.",
+        image: "./static/assets/4/step_3.png",
+      },
+      {
+        comment:
+          "Refine the image to ensure the tiny pink screwdriver is clearly making physical contact with the huge robot's foot. The screwdriver should appear pressed or resting against the lowest structural plate or base of the robot's foot, eliminating any gap between the screwdriver and the metallic surface.",
+        image: "./static/assets/4/step_4.png",
+      },
     ],
   },
   {
-    prompt: "A realistic photo of a banana with three ears of corn attached to it, all in a kitchen setting with wooden countertops and natural lighting.",
+    prompt:
+      "A pixel art image shows a tiny pine tree with two carrots positioned in front of it. There is also a house in the scene.",
+    images: {
+      qwen: "./static/assets/5/qwen.png",
+      gpt: "./static/assets/5/gpt.png",
+      nano: "./static/assets/5/gemini.png",
+      ours: "./static/assets/5/ours.png",
+    },
+    imageNotes: {
+      qwen: "Pine tree remains large.",
+      gpt: "Pine tree remains largge",
+      nano: "Pine tree remains large.",
+      ours: "Failure case: Carrots not directly in front of pine.",
+    },
+    imageNoteStatus: {
+      ours: "failure",
+    },
+    reasoningTrace: [
+      {
+        comment:
+          "A pixel art image shows a tiny pine tree with two carrots positioned in front of it. There is also a house in the scene.",
+        image: "./static/assets/5/step_0.png",
+      },
+      {
+        comment:
+          "Edit the pixel art image by making the large pine tree significantly smaller to be tiny, while maintaining the position of the two carrots in front of it and the house in the scene.",
+        image: "./static/assets/5/step_1.png",
+      },
+      {
+        comment:
+          "Edit the image to clearly show exactly two distinct, standard-sized carrots. Reposition these two carrots so they are located directly in front of the base of the tiny pine tree, and ensure the house remains in the scene.",
+        image: "./static/assets/5/step_2.png",
+      },
+      {
+        comment:
+          "Edit the image to reposition the two distinct carrots so they are clearly located immediately and directly in front of the base of the tiny pine tree, ensuring the tiny pine tree and the house remain unchanged.",
+        image: "./static/assets/5/step_3.png",
+      },
+    ],
+  },
+  {
+    prompt:
+      "An abstract image features a truck positioned lower in the scene, with a spider placed directly above it but not touching. Additionally, there is a chicken with a metallic texture present in the composition.",
     images: {
       qwen: "./static/assets/6/qwen.png",
       gpt: "./static/assets/6/gpt.png",
@@ -141,22 +227,35 @@ const SAMPLE_ROWS = [
       ours: "./static/assets/6/ours.png",
     },
     imageNotes: {
-      qwen: "Only 2 ears of corn.",
-      gpt: "Only 2 ears of corn.",
-      nano: "Only 2 ears of corn.",
+      qwen: "Aligned to prompt but not abstract style.",
+      gpt: "Aligned to prompt.",
+      nano: "Spider overlaps truck.",
       ours: "Aligned to prompt.",
     },
     imageNoteStatus: {
       ours: "success",
     },
     reasoningTrace: [
-      { image: "./static/assets/6/step_0.png" },
-      { image: "./static/assets/6/step_1.png" },
-      { image: "./static/assets/6/step_2.png" },
+      {
+        comment:
+          "An abstract image features a truck positioned lower in the scene, with a spider placed directly above it but not touching. Additionally, there is a chicken with a metallic texture present in the composition.",
+        image: "./static/assets/6/step_0.png",
+      },
+      {
+        comment:
+          "Refine the overall style of the image to be genuinely abstract, focusing on geometric abstraction and abstract expressionism techniques. Maintain the current composition of the truck, the metallic chicken, and the spider, ensuring they are rendered using abstract artistic styles while retaining their recognizable forms.",
+        image: "./static/assets/6/step_1.png",
+      },
+      {
+        comment:
+          "Transform the image into a truly abstract composition by applying geometric abstraction and abstract expressionism principles. Keep the truck, metallic chicken, and spider in their current positions, but render them through abstract visual language while preserving their identifiable characteristics.",
+        image: "./static/assets/6/step_2.png",
+      },
     ],
   },
   {
-    prompt: "A photorealistic image of a blue elephant with pink polka dots, standing in a grassy field under a cloudy sky, with a mountain range in the background.",
+    prompt:
+      "The image is a sketch showing three brown hills with a glass texture, positioned on the left side of a tree.",
     images: {
       qwen: "./static/assets/7/qwen.png",
       gpt: "./static/assets/7/gpt.png",
@@ -164,22 +263,35 @@ const SAMPLE_ROWS = [
       ours: "./static/assets/7/ours.png",
     },
     imageNotes: {
-      qwen: "Elephant not blue with pink polka dots.",
-      gpt: "Elephant not blue with pink polka dots.",
-      nano: "Elephant not blue with pink polka dots.",
+      qwen: "Not brown colored hills.",
+      gpt: "Four hills.",
+      nano: "Not brown colored hills.",
       ours: "Aligned to prompt.",
     },
     imageNoteStatus: {
       ours: "success",
     },
     reasoningTrace: [
-      { image: "./static/assets/7/step_0.png" },
-      { image: "./static/assets/7/step_1.png" },
-      { image: "./static/assets/7/step_2.png" },
+      {
+        comment:
+          "The image is a sketch showing three brown hills with a glass texture, positioned on the left side of a tree.",
+        image: "./static/assets/7/step_0.png",
+      },
+      {
+        comment:
+          "Refine the sketch by coloring the three glass-textured hills brown, while maintaining the overall appearance of a detailed pencil sketch. Ensure these structures look like rounded earthen mounds covered in glass texture, rather than highly stylized futuristic domes.",
+        image: "./static/assets/7/step_1.png",
+      },
+      {
+        comment:
+          "Refine the three brown glass structures to emphasize their nature as low, rounded earthen mounds or natural hills covered in the segmented brown glass texture. Soften the geometric appearance slightly so they blend more naturally into the sketched landscape, ensuring they look less like highly artificial domes. Maintain the overall detailed pencil sketch aesthetic.",
+        image: "./static/assets/7/step_2.png",
+      },
     ],
   },
   {
-    prompt: "Create an image of a red fire hydrant with googly eyes and a party hat, standing on a beach with palm trees, wearing sunglasses and holding a surfboard.",
+    prompt:
+      "The image shows a triangular-shaped dirt road, two purple apples, and a screwdriver. The screwdriver is placed on the dirt road, and one apple is on each side of the road.",
     images: {
       qwen: "./static/assets/8/qwen.png",
       gpt: "./static/assets/8/gpt.png",
@@ -187,21 +299,45 @@ const SAMPLE_ROWS = [
       ours: "./static/assets/8/ours.png",
     },
     imageNotes: {
-      qwen: "Missing several elements.",
-      gpt: "Missing several elements.",
-      nano: "Missing several elements.",
+      qwen: "Apples are not purple.",
+      gpt: "Road not clearly triangular.",
+      nano: "Apples are not purple.",
       ours: "Aligned to prompt.",
     },
     imageNoteStatus: {
       ours: "success",
     },
     reasoningTrace: [
-      { image: "./static/assets/8/step_0.png" },
-      { image: "./static/assets/8/step_1.png" },
-      { image: "./static/assets/8/step_2.png" },
-      { image: "./static/assets/8/step_3.png" },
-      { image: "./static/assets/8/step_4.png" },
-      { image: "./static/assets/8/step_5.png" },
+      {
+        comment:
+          "The image shows a triangular-shaped dirt road, two purple apples, and a screwdriver. The screwdriver is placed on the dirt road, and one apple is on each side of the road.",
+        image: "./static/assets/8/step_0.png",
+      },
+      {
+        comment:
+          "Change the color of the two apples to a vibrant purple. Also, clearly define the dirt road around the objects so that it forms a visible triangular shape.",
+        image: "./static/assets/8/step_1.png",
+      },
+      {
+        comment:
+          "Clearly define the boundaries of the dirt road so that it forms a prominent triangular junction shape around the central objects (screwdriver and apples), making the triangular configuration highly visible.",
+        image: "./static/assets/8/step_2.png",
+      },
+      {
+        comment:
+          "Refine the definition of the dirt road junction so that the road surfaces and boundaries clearly form a sharp, distinct triangular shape (V-fork) around the central objects (apples and screwdriver), emphasizing the visible split in the path.",
+        image: "./static/assets/8/step_3.png",
+      },
+      {
+        comment:
+          "Enhance the definition of the dirt road fork. Ensure the road boundaries clearly delineate a pronounced V-shape junction, making the central ground area where the two purple apples and the screwdriver rest appear distinctly triangular, confirming the required triangle-shaped dirt road configuration.",
+        image: "./static/assets/8/step_4.png",
+      },
+      {
+        comment:
+          "Finalize the triangular junction by sharpening edge contrast and keeping both purple apples and the screwdriver centered within the triangle for clarity.",
+        image: "./static/assets/8/step_5.png",
+      },
     ],
   },
 ];
@@ -217,6 +353,13 @@ async function loadText(path) {
     console.warn("[Carousel] Unable to load text", path, error);
     return null;
   }
+}
+
+function parseStepTexts(rawText) {
+  return rawText
+    .split(/\r?\n/)
+    .map((line) => line.replace(/^\s*Step\s*\d+\s*:\s*/i, "").trim())
+    .filter(Boolean);
 }
 
 function createModelCard(model, rowIndex, imageSrc, note, noteStatus) {
@@ -280,9 +423,15 @@ async function renderDemoCarousel() {
     const block = $('<div>').addClass('prompt-block');
 
     let promptContent = row.prompt || "Prompt unavailable.";
+    let stepTextLines = null;
     if (row.promptSrc) {
       const text = await loadText(row.promptSrc);
-      promptContent = text ? text.trim() : "Prompt unavailable.";
+      if (text) {
+        promptContent = text.trim();
+        stepTextLines = parseStepTexts(text);
+      } else {
+        promptContent = "Prompt unavailable.";
+      }
     }
 
     const prompt = $('<p>')
@@ -317,7 +466,15 @@ async function renderDemoCarousel() {
       .text('Show reasoning trace');
     block.append(toggle);
 
-    const tracePanel = createTracePanel(row.reasoningTrace, traceId);
+    let traceList = row.reasoningTrace || [];
+    if (stepTextLines?.length) {
+      traceList = traceList.map((trace, idx) => ({
+        ...trace,
+        comment: trace.comment || stepTextLines[idx] || trace.comment,
+      }));
+    }
+
+    const tracePanel = createTracePanel(traceList, traceId);
     block.append(tracePanel);
 
     item.append(block);
