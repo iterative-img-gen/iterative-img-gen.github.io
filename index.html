@@ -38,7 +38,7 @@
   <script defer src="./static/js/fontawesome.all.min.js"></script>
   <script src="./static/js/bulma-carousel.min.js"></script>
   <script src="./static/js/bulma-slider.min.js"></script>
-  <script src="./static/js/index.js"></script>
+  <script src="./static/js/index.js?v=2"></script>
 </head>
 <body>
 
@@ -188,13 +188,26 @@
   </div>
 </section>
 
-<section class="hero teaser">
+
+
+<!-- <section class="hero teaser">
   <div class="container is-max-desktop">
     <div class="hero-body">
       <img id="teaser" src="./static/images/teaser.png" alt="Iterative Refinement Results" style="width: 100%; height: auto; max-width: none; position: relative; left: -0%;">
       <h2 class="subtitle has-text-centered">
         Iterative refinement during inference time enables high fidelity generation of complex prompts on which traditional parallel inference-time strategies can fail to generate a fully accurate image even at high number of parallel samples as illustrated above.
       </h2>
+    </div>
+  </div>
+</section> -->
+
+<section class="section" aria-label="Paper TLDR">
+  <div class="container is-max-desktop">
+    <div class="box has-text-centered" style="background-color: #b1d8ff; border-radius: 12px;">
+      <h2 class="title is-4" style="margin-bottom: 0.75rem;">TL;DR</h2>
+      <p class="content" style="margin-bottom: 0;">
+        TL;DR: We introduce an inference-time iterative refinement loop for text-to-image models that reuses intermediate generations instead of one-shot sampling. A generator drafts an image, a VLM critic issues corrections and actions (continue, backtrack, restart, stop), an editor applies sub-prompts, and a verifier tracks alignment. Under matched compute on ConceptMix, T2I-CompBench, and TIIF-Bench, iterative and iterative+parallel variants beat parallel-only baselines by up to +16.9% solve rate (ConceptMix k=7), +13.8% on 3D-spatial T2I, and +5% on TIIF basics. Human raters prefer our iteratively refined images 58.7% vs 41.3%. Our pipeline is simple, tool-free, and generalizes across Qwen, OpenAI, and Gemini models.
+      </p>
     </div>
   </div>
 </section>
@@ -259,7 +272,7 @@
           </p>
         </div>
         <div class="content has-text-centered">
-          <img src="./static/images/iclr_method (2).pdf" alt="Method Overview" style="max-width: 100%; height: auto;">
+          <img src="./static/images/iclr_method (2).png" alt="Method Overview" style="max-width: 100%; height: auto;">
           <p style="font-size: 0.9em; color: #666; margin-top: 10px;">
             Our iterative refinement framework combines a generator, critic, editor, and verifier for progressive image improvement.
           </p>
@@ -282,9 +295,301 @@
           </p>
         </div>
 
+        <div class="content has-text-centered">
+          <img src="./static/images/conceptmix_t2ibench_improvement_scaled.png" alt="Iterative refinement improves compute-matched performance over parallel inference" style="max-width: 100%; height: auto;">
+          <p style="font-size: 0.9em; color: #666; margin-top: 10px;">
+            Iterative inference-time refinement yields stronger gains than compute-matched parallel inference across multiple state-of-the-art text-to-image models.
+          </p>
+        </div>
+
+        <div class="columns is-centered">
+          <div class="column is-full-width">
+            <style>
+              .results-matrix {
+                border-collapse: collapse;
+                border-spacing: 0;
+                width: 100%;
+              }
+              .results-matrix th,
+              .results-matrix td {
+                border: 1px solid #cbd5e1 !important;
+              }
+              .results-matrix thead tr.group-row {
+                border-bottom: 2px solid #1f2937 !important;
+              }
+              .results-matrix thead tr.header-row {
+                border-top: 2px solid #1f2937 !important;
+                border-bottom: 2px solid #1f2937 !important;
+              }
+              .results-matrix tr.section-sep {
+                border-top: 2px solid #1f2937 !important;
+              }
+              .results-matrix tr.delta-sep {
+                border-bottom: 2px solid #1f2937 !important;
+              }
+              .results-matrix .v-sep {
+                border-left: 2px solid #1f2937 !important;
+              }
+              .results-matrix thead tr.title-row {
+                border-bottom: 2px solid #1f2937 !important;
+              }
+            </style>
+            <div class="table-container" style="overflow-x: auto;">
+              <table class="table is-striped is-hoverable is-fullwidth has-text-centered results-matrix">
+                <caption style="caption-side: top; font-weight: 600;">
+                  Performance comparison of parallel sampling, iterative refinement, and combined strategies across three state-of-the-art text-to-image models on ConceptMix and T2I-CompBench.
+                </caption>
+                <thead>
+                  <tr class="title-row">
+                    <th></th>
+                    <th colspan="7">ConceptMix full solve rate (%)</th>
+                    <th class="v-sep" colspan="8">T2I-CompBench VLLM (GPT4o) score (1 to 100)</th>
+                  </tr>
+                  <tr class="header-row">
+                    <th>Model</th>
+                    <th style="border-top: 2px solid #1f2937;">k=1</th>
+                    <th style="border-top: 2px solid #1f2937;">k=2</th>
+                    <th style="border-top: 2px solid #1f2937;">k=3</th>
+                    <th style="border-top: 2px solid #1f2937;">k=4</th>
+                    <th style="border-top: 2px solid #1f2937;">k=5</th>
+                    <th style="border-top: 2px solid #1f2937;">k=6</th>
+                    <th style="border-top: 2px solid #1f2937;">k=7</th>
+                    <th class="v-sep" style="border-top: 2px solid #1f2937;">Spatial</th>
+                    <th style="border-top: 2px solid #1f2937;">3DSpat</th>
+                    <th style="border-top: 2px solid #1f2937;">Numer</th>
+                    <th style="border-top: 2px solid #1f2937;">Shape</th>
+                    <th style="border-top: 2px solid #1f2937;">Color</th>
+                    <th style="border-top: 2px solid #1f2937;">Texture</th>
+                    <th style="border-top: 2px solid #1f2937;">Non-Spat</th>
+                    <th style="border-top: 2px solid #1f2937;">Cmplex</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="section-sep">
+                    <td>Qwen Parallel</td>
+                    <td>92.8</td>
+                    <td>82.5</td>
+                    <td>74.3</td>
+                    <td>69.2</td>
+                    <td>60.1</td>
+                    <td>51.2</td>
+                    <td>49.6</td>
+                    <td class="v-sep">82.3</td>
+                    <td>63.1</td>
+                    <td>87.0</td>
+                    <td>87.2</td>
+                    <td>92.6</td>
+                    <td><strong>96.2</strong></td>
+                    <td>92.8</td>
+                    <td>93.4</td>
+                  </tr>
+                  <tr>
+                    <td>Qwen Iter (ours)</td>
+                    <td>96.1</td>
+                    <td>91.4</td>
+                    <td>87.0</td>
+                    <td>82.1</td>
+                    <td><strong>79.6</strong></td>
+                    <td>67.4</td>
+                    <td>64.3</td>
+                    <td class="v-sep">87.4</td>
+                    <td><strong>77.3</strong></td>
+                    <td>91.1</td>
+                    <td>91.2</td>
+                    <td>92.4</td>
+                    <td>95.1</td>
+                    <td><strong>94.8</strong></td>
+                    <td>94.8</td>
+                  </tr>
+                  <tr>
+                    <td>Qwen Iter.+Par. (ours)</td>
+                    <td><strong>96.5</strong></td>
+                    <td><strong>91.7</strong></td>
+                    <td><strong>87.4</strong></td>
+                    <td><strong>82.2</strong></td>
+                    <td>78.9</td>
+                    <td><strong>71.8</strong></td>
+                    <td><strong>66.5</strong></td>
+                    <td class="v-sep"><strong>89.4</strong></td>
+                    <td>76.9</td>
+                    <td><strong>93.3</strong></td>
+                    <td><strong>90.1</strong></td>
+                    <td>92.6</td>
+                    <td>95.8</td>
+                    <td>94.7</td>
+                    <td><strong>95.0</strong></td>
+                  </tr>
+                  <tr class="delta-sep" style="color:#1d4ed8;">
+                    <td style="color:#1d4ed8;">&Delta;</td>
+                    <td style="color:#1d4ed8;">+3.7</td>
+                    <td style="color:#1d4ed8;">+9.2</td>
+                    <td style="color:#1d4ed8;">+13.1</td>
+                    <td style="color:#1d4ed8;">+13.0</td>
+                    <td style="color:#1d4ed8;">+18.8</td>
+                    <td style="color:#1d4ed8;">+20.6</td>
+                    <td style="color:#1d4ed8;">+16.9</td>
+                    <td class="v-sep" style="color:#1d4ed8;">+7.1</td>
+                    <td style="color:#1d4ed8;">+13.8</td>
+                    <td style="color:#1d4ed8;">+6.3</td>
+                    <td style="color:#1d4ed8;">+2.9</td>
+                    <td style="color:#1d4ed8;">+0.0</td>
+                    <td style="color:#1d4ed8;">-0.4</td>
+                    <td style="color:#1d4ed8;">+1.9</td>
+                    <td style="color:#1d4ed8;">+1.6</td>
+                  </tr>
+                  <tr class="section-sep">
+                    <td>Nano-Banana Parallel</td>
+                    <td>93.8</td>
+                    <td>88.8</td>
+                    <td>86.6</td>
+                    <td>78.4</td>
+                    <td>65.8</td>
+                    <td>61.7</td>
+                    <td>55.4</td>
+                    <td class="v-sep">84.7</td>
+                    <td>81.2</td>
+                    <td>84.3</td>
+                    <td>88.5</td>
+                    <td>89.8</td>
+                    <td>95.0</td>
+                    <td><strong>96.8</strong></td>
+                    <td>91.0</td>
+                  </tr>
+                  <tr>
+                    <td>Nano-Banana Iter (ours)</td>
+                    <td>94.1</td>
+                    <td>90.4</td>
+                    <td>87.2</td>
+                    <td>81.3</td>
+                    <td><strong>73.5</strong></td>
+                    <td>64.6</td>
+                    <td>63.6</td>
+                    <td class="v-sep">90.6</td>
+                    <td>87.8</td>
+                    <td>93.9</td>
+                    <td>89.9</td>
+                    <td>89.7</td>
+                    <td><strong>95.1</strong></td>
+                    <td>95.8</td>
+                    <td><strong>94.7</strong></td>
+                  </tr>
+                  <tr>
+                    <td>Nano-Banana Iter.+Par. (ours)</td>
+                    <td>93.8</td>
+                    <td><strong>91.0</strong></td>
+                    <td><strong>87.5</strong></td>
+                    <td><strong>82.8</strong></td>
+                    <td>71.4</td>
+                    <td><strong>69.8</strong></td>
+                    <td><strong>63.7</strong></td>
+                    <td class="v-sep"><strong>91.1</strong></td>
+                    <td><strong>89.1</strong></td>
+                    <td><strong>94.1</strong></td>
+                    <td><strong>88.8</strong></td>
+                    <td><strong>92.1</strong></td>
+                    <td>94.8</td>
+                    <td>96.7</td>
+                    <td>94.5</td>
+                  </tr>
+                  <tr class="delta-sep" style="color:#1d4ed8;">
+                    <td style="color:#1d4ed8;">&Delta;</td>
+                    <td style="color:#1d4ed8;">+0.0</td>
+                    <td style="color:#1d4ed8;">+2.2</td>
+                    <td style="color:#1d4ed8;">+0.9</td>
+                    <td style="color:#1d4ed8;">+4.4</td>
+                    <td style="color:#1d4ed8;">+5.6</td>
+                    <td style="color:#1d4ed8;">+8.1</td>
+                    <td style="color:#1d4ed8;">+8.3</td>
+                    <td class="v-sep" style="color:#1d4ed8;">+6.6</td>
+                    <td style="color:#1d4ed8;">+7.9</td>
+                    <td style="color:#1d4ed8;">+9.8</td>
+                    <td style="color:#1d4ed8;">+0.3</td>
+                    <td style="color:#1d4ed8;">+2.3</td>
+                    <td style="color:#1d4ed8;">-0.2</td>
+                    <td style="color:#1d4ed8;">-0.1</td>
+                    <td style="color:#1d4ed8;">+3.5</td>
+                  </tr>
+                  <tr class="section-sep">
+                    <td>GPT-Image Parallel</td>
+                    <td>94.2</td>
+                    <td>89.2</td>
+                    <td>88.1</td>
+                    <td>76.7</td>
+                    <td>71.0</td>
+                    <td>69.5</td>
+                    <td>51.3</td>
+                    <td class="v-sep">87.5</td>
+                    <td>83.9</td>
+                    <td>88.6</td>
+                    <td>88.5</td>
+                    <td>91.6</td>
+                    <td><strong>92.5</strong></td>
+                    <td>95.3</td>
+                    <td>92.9</td>
+                  </tr>
+                  <tr>
+                    <td>GPT-Image Iterative (ours)</td>
+                    <td>96.0</td>
+                    <td>91.4</td>
+                    <td>90.6</td>
+                    <td><strong>85.4</strong></td>
+                    <td>72.0</td>
+                    <td>69.6</td>
+                    <td>58.9</td>
+                    <td class="v-sep">89.6</td>
+                    <td><strong>90.0</strong></td>
+                    <td>92.7</td>
+                    <td><strong>92.1</strong></td>
+                    <td><strong>91.9</strong></td>
+                    <td>92.0</td>
+                    <td><strong>95.5</strong></td>
+                    <td>93.0</td>
+                  </tr>
+                  <tr>
+                    <td>GPT-Image Iter.+Par. (ours)</td>
+                    <td><strong>97.7</strong></td>
+                    <td><strong>94.2</strong></td>
+                    <td><strong>91.1</strong></td>
+                    <td>84.6</td>
+                    <td><strong>79.5</strong></td>
+                    <td><strong>76.8</strong></td>
+                    <td><strong>61.9</strong></td>
+                    <td class="v-sep"><strong>91.0</strong></td>
+                    <td>89.6</td>
+                    <td><strong>93.2</strong></td>
+                    <td>90.9</td>
+                    <td>91.1</td>
+                    <td>92.3</td>
+                    <td>95.3</td>
+                    <td><strong>93.1</strong></td>
+                  </tr>
+                  <tr class="delta-sep" style="color:#1d4ed8;">
+                    <td style="color:#1d4ed8;">&Delta;</td>
+                    <td style="color:#1d4ed8;">+3.5</td>
+                    <td style="color:#1d4ed8;">+5.0</td>
+                    <td style="color:#1d4ed8;">+3.0</td>
+                    <td style="color:#1d4ed8;">+7.9</td>
+                    <td style="color:#1d4ed8;">+8.5</td>
+                    <td style="color:#1d4ed8;">+7.3</td>
+                    <td style="color:#1d4ed8;">+10.6</td>
+                    <td class="v-sep" style="color:#1d4ed8;">+3.5</td>
+                    <td style="color:#1d4ed8;">+5.7</td>
+                    <td style="color:#1d4ed8;">+4.6</td>
+                    <td style="color:#1d4ed8;">+2.4</td>
+                    <td style="color:#1d4ed8;">-0.5</td>
+                    <td style="color:#1d4ed8;">-0.2</td>
+                    <td style="color:#1d4ed8;">+0.0</td>
+                    <td style="color:#1d4ed8;">+0.2</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
         <h4 class="title is-5">ConceptMix Performance</h4>
         <div class="content has-text-centered">
-          <img src="./static/images/comparison_parallel_iterative.pdf" alt="ConceptMix Results" style="max-width: 100%; height: auto;">
+          <img src="./static/images/comparison_parallel_iterative.png" alt="ConceptMix Results" style="max-width: 100%; height: auto;">
           <p style="font-size: 0.9em; color: #666; margin-top: 10px;">
             Performance gains on ConceptMix benchmark across different binding complexities.
           </p>
@@ -292,7 +597,7 @@
 
         <h4 class="title is-5">Comparison with Existing Methods</h4>
         <div class="content has-text-centered">
-          <img src="./static/images/comp_method_comparison_clear_background.pdf" alt="Method Comparison" style="max-width: 100%; height: auto;">
+          <img src="./static/images/comp_method_comparison_clear_background.png" alt="Method Comparison" style="max-width: 100%; height: auto;">
           <p style="font-size: 0.9em; color: #666; margin-top: 10px;">
             Comparison against existing compositional generation methods.
           </p>
@@ -300,7 +605,7 @@
 
         <h3 class="title is-4">Qualitative Results</h3>
         <div class="content has-text-centered">
-          <img src="./static/images/qualitative.pdf" alt="Qualitative Examples" style="max-width: 100%; height: auto;">
+          <img src="./static/images/qualitative.png" alt="Qualitative Examples" style="max-width: 100%; height: auto;">
           <p style="font-size: 0.9em; color: #666; margin-top: 10px;">
             Examples showing iterative refinement process on complex prompts.
           </p>
@@ -308,7 +613,7 @@
 
         <h3 class="title is-4">Human Evaluation</h3>
         <div class="content has-text-centered">
-          <img src="./static/images/human-preference.pdf" alt="Human Preference Results" style="max-width: 80%; height: auto;">
+          <img src="./static/images/human-preference.png" alt="Human Preference Results" style="max-width: 80%; height: auto;">
           <p style="font-size: 0.9em; color: #666; margin-top: 10px;">
             Human evaluators preferred our iterative method 58.7% of the time over parallel sampling.
           </p>
