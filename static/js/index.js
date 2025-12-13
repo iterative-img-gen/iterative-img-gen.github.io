@@ -342,7 +342,18 @@ const SAMPLE_ROWS = [
   },
 ];
 
+// Separate data buckets so each carousel can diverge without affecting the other.
+const RESULT_ROWS = SAMPLE_ROWS;
+const REASONING_ROWS = JSON.parse(JSON.stringify(SAMPLE_ROWS));
+
 const PLACEHOLDER_IMAGE = "https://placehold.co/400x400/e2e8f0/64748b?text=No+Image";
+
+function buildTracePrefix(selector) {
+  return (
+    (selector || 'trace')
+      .replace(/[^a-zA-Z0-9_-]/g, '') || 'trace'
+  );
+}
 
 async function loadText(path) {
   try {
@@ -381,10 +392,10 @@ function createModelCard(model, rowIndex, imageSrc, note, noteStatus) {
   return card;
 }
 
-function createTracePanel(traceList, traceId) {
+function createTracePanel(traceList, traceId, alwaysVisible = false, showHeading = true) {
   const panel = $('<div>')
     .addClass('trace-panel')
-    .attr('data-visible', 'false')
+    .attr('data-visible', alwaysVisible ? 'true' : 'false')
     .attr('id', traceId);
 
   const heading = $('<h4>').text('Reasoning Trace');
@@ -406,19 +417,26 @@ function createTracePanel(traceList, traceId) {
     steps.append(traceCard);
   });
 
-  panel.append(heading, steps);
+  if (showHeading) {
+    panel.append(heading);
+  }
+  panel.append(steps);
   return panel;
 }
 
-async function renderDemoCarousel() {
-  const container = $('#results-carousel');
+async function renderDemoCarousel(selector = '#results-carousel', rows = SAMPLE_ROWS) {
+  const container = $(selector);
   if (!container.length) {
     return;
   }
   container.empty();
 
-  for (let i = 0; i < SAMPLE_ROWS.length; i++) {
-    const row = SAMPLE_ROWS[i];
+  // Build a unique, safe prefix for IDs inside this carousel so multiple carousels
+  // can coexist without clashing on element IDs.
+  const tracePrefix = buildTracePrefix(selector);
+
+  for (let i = 0; i < rows.length; i++) {
+    const row = rows[i];
     const item = $('<div>').addClass('item');
     const block = $('<div>').addClass('prompt-block');
 
@@ -458,7 +476,7 @@ async function renderDemoCarousel() {
     });
     block.append(grid);
 
-    const traceId = `trace-${i}`;
+    const traceId = `${tracePrefix}-trace-${i}`;
     const toggle = $('<button>')
       .addClass('trace-toggle')
       .attr('type', 'button')
@@ -475,6 +493,54 @@ async function renderDemoCarousel() {
     }
 
     const tracePanel = createTracePanel(traceList, traceId);
+    block.append(tracePanel);
+
+    item.append(block);
+    container.append(item);
+  }
+}
+
+async function renderReasoningCarousel(selector = '#reasoning-carousel', rows = REASONING_ROWS) {
+  const container = $(selector);
+  if (!container.length) {
+    return;
+  }
+  container.empty();
+
+  const tracePrefix = buildTracePrefix(selector);
+
+  for (let i = 0; i < rows.length; i++) {
+    const row = rows[i];
+    const item = $('<div>').addClass('item');
+    const block = $('<div>').addClass('prompt-block');
+
+    let promptContent = row.prompt || "Prompt unavailable.";
+    let stepTextLines = null;
+    if (row.promptSrc) {
+      const text = await loadText(row.promptSrc);
+      if (text) {
+        promptContent = text.trim();
+        stepTextLines = parseStepTexts(text);
+      } else {
+        promptContent = "Prompt unavailable.";
+      }
+    }
+
+    const prompt = $('<p>')
+      .addClass('prompt-text')
+      .html(`<strong>Prompt:</strong> ${promptContent}`);
+    block.append(prompt);
+
+    let traceList = row.reasoningTrace || [];
+    if (stepTextLines?.length) {
+      traceList = traceList.map((trace, idx) => ({
+        ...trace,
+        comment: trace.comment || stepTextLines[idx] || trace.comment,
+      }));
+    }
+
+    const traceId = `${tracePrefix}-trace-${i}`;
+    const tracePanel = createTracePanel(traceList, traceId, true, false);
     block.append(tracePanel);
 
     item.append(block);
@@ -506,7 +572,8 @@ $(document).ready(function() {
     });
 
     (async function initDemoSection() {
-      await renderDemoCarousel();
+      await renderDemoCarousel('#results-carousel', RESULT_ROWS);
+      await renderReasoningCarousel('#reasoning-carousel', REASONING_ROWS);
       initializeResultCarousel();
     })();
 
