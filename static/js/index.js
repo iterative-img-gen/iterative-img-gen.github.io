@@ -562,7 +562,11 @@ function initializeResultCarousel() {
     autoplaySpeed: 3000,
   };
 
-  bulmaCarousel.attach('.carousel', options);
+  // Keep references so we can react to slide changes (e.g. collapse trace panels
+  // to prevent the carousel from staying "tall" due to off-screen slides).
+  const instances = bulmaCarousel.attach('.carousel', options);
+  window.__bulmaCarouselInstances = instances;
+  return instances;
 }
 
 $(document).ready(function() {
@@ -574,7 +578,47 @@ $(document).ready(function() {
     (async function initDemoSection() {
       await renderDemoCarousel('#results-carousel', RESULT_ROWS);
       await renderReasoningCarousel('#reasoning-carousel', REASONING_ROWS);
-      initializeResultCarousel();
+      const carouselInstances = initializeResultCarousel() || [];
+
+      function resetTracesWithinCarousel(carouselEl) {
+        if (!carouselEl) return;
+        // Only touch carousels that actually have toggle-controlled traces.
+        if (!carouselEl.querySelector('.trace-toggle')) return;
+        $(carouselEl).find('.trace-panel').attr('data-visible', 'false');
+        $(carouselEl).find('.trace-toggle').text('Show reasoning trace');
+      }
+
+      function refreshCarouselLayout(carouselEl) {
+        const instance = carouselEl && carouselEl.bulmaCarousel;
+        if (!instance) return;
+        try {
+          // Clear any stale inline height first (fade mode sets these).
+          if (instance.container && instance.container.style) {
+            instance.container.style.height = '';
+          }
+          // Force a "no-op" transition so the library recomputes layout/height.
+          if (instance.state) {
+            instance.state.next = instance.state.index;
+          }
+          if (instance.transitioner && typeof instance.transitioner.apply === 'function') {
+            const cb = typeof instance._setHeight === 'function' ? instance._setHeight.bind(instance) : undefined;
+            instance.transitioner.apply(true, cb);
+          }
+        } catch (e) {
+          // Best-effort; layout will still be usable even if this fails.
+        }
+      }
+
+      // When the user changes examples, make sure any open trace panel is closed.
+      // Otherwise, off-screen slides can keep the carousel container tall and leave
+      // an empty gap below it.
+      carouselInstances.forEach((instance) => {
+        if (!instance || !instance.element || typeof instance.on !== 'function') return;
+        instance.on('before:show', () => {
+          resetTracesWithinCarousel(instance.element);
+          refreshCarouselLayout(instance.element);
+        });
+      });
     })();
 
     // preloadInterpolationImages();
@@ -588,14 +632,37 @@ $(document).ready(function() {
     bulmaSlider.attach();
 
     $(document).on('click', '.trace-toggle', function() {
-      const targetId = $(this).attr('data-target');
-      const panel = $('#' + targetId);
-      if (!panel.length) {
+      // IMPORTANT: bulma-carousel duplicates slides for looping/infinite mode,
+      // which duplicates IDs. So we must resolve the panel relative to the clicked
+      // toggle instead of using a global "#id" selector.
+      const $button = $(this);
+      const $block = $button.closest('.prompt-block');
+      const $panel = $block.find('.trace-panel').first();
+      if (!$panel.length) {
         return;
       }
-      const isVisible = panel.attr('data-visible') === 'true';
-      panel.attr('data-visible', isVisible ? 'false' : 'true');
-      $(this).text(isVisible ? 'Show reasoning trace' : 'Hide reasoning trace');
+      const isVisible = $panel.attr('data-visible') === 'true';
+      $panel.attr('data-visible', isVisible ? 'false' : 'true');
+      $button.text(isVisible ? 'Show reasoning trace' : 'Hide reasoning trace');
+
+      // After toggling, force a layout refresh so the carousel height collapses
+      // immediately when the panel is hidden.
+      const carouselEl = $button.closest('.carousel')[0];
+      if (carouselEl) {
+        try {
+          if (carouselEl.bulmaCarousel && carouselEl.bulmaCarousel.container) {
+            carouselEl.bulmaCarousel.container.style.height = '';
+          }
+          if (carouselEl.bulmaCarousel && carouselEl.bulmaCarousel.state) {
+            carouselEl.bulmaCarousel.state.next = carouselEl.bulmaCarousel.state.index;
+          }
+          if (carouselEl.bulmaCarousel && carouselEl.bulmaCarousel.transitioner) {
+            const inst = carouselEl.bulmaCarousel;
+            const cb = typeof inst._setHeight === 'function' ? inst._setHeight.bind(inst) : undefined;
+            inst.transitioner.apply(true, cb);
+          }
+        } catch (e) {}
+      }
     });
 
     $('#copy-bibtex').on('click', function() {
