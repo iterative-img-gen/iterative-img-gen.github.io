@@ -27,6 +27,47 @@ const MODEL_COLUMNS = [
 ];
 
 const SAMPLE_ROWS = [
+  
+  {
+    prompt: "Four ducks are standing on the ground, and a tiny pink giraffe is standing in front of them holding a bottle with a ship inside it. Five novels are placed on the ground behind the ducks. The image is in a cartoon style.",
+    images: {
+      qwen: "./static/assets2/1/qwen.png",
+      gpt: "./static/assets2/1/gpt.png",
+      nano: "./static/assets2/1/gemini.png",
+      ours: "./static/assets2/1/ours.png",
+    },
+    imageNotes: {
+      qwen: "Novels placed in front of the ducks.",
+      gpt: "Novels placed in front of the ducks.",
+      nano: "Incorrect number of novels.",
+      ours: "Aligned to prompt.",
+    },
+    imageNoteStatus: {
+      ours: "success",
+    },
+    reasoningTrace: [
+      {
+        comment: "Four ducks are standing on the ground, and a tiny pink giraffe is standing in front of them holding a bottle with a ship inside it. Five novels are placed on the ground behind the ducks. The image is in cartoon style.",
+        image: "./static/assets2/1/step_0.png",
+      },
+      {
+        comment: "Move the five novels from in front of the ducks to behind them, ensuring they are placed on the ground in the background while keeping all other elements in their correct positions.",
+        image: "./static/assets2/1/step_1.png",
+      },
+      {
+        comment: "Edit the image to make space behind the ducks for novels, ensuring they are placed on the ground in the background while keeping all other elements in their correct positions.",
+        image: "./static/assets2/1/step_2.png",
+      },
+      {
+        comment: "Add one more novel behind the ducks, ensuring there are five novels in total and preserving the overall composition.",
+        image: "./static/assets2/1/step_3.png",
+      },
+      {
+        comment: "Edit the bottle held by the giraffe to have only a single knob, and ensure the entire image is in a cartoon style.",
+        image: "./static/assets2/1/step_4.png",
+      },
+    ],
+  },
   {
     prompt: "A woman sits at a table, typing on a red laptop. A black chicken with a glass-like texture stands next to her. A large spider hangs from the ceiling above them. The image has an impressionist style.",
     images: {
@@ -60,17 +101,17 @@ const SAMPLE_ROWS = [
     ],
   },
   {
-    prompt: "Four ducks are standing on the ground, and a tiny pink giraffe is standing next to them. Three novels are placed on the ground nearby. The image is in a photorealistic style.",
+    prompt: "A warm, animated-cartoon New Year’s night city scene viewed from street level, with tall buildings and a clear sky where fireworks spell “2026.” In the background, a stone clock tower clearly shows 12:00 at midnight. High up in one of the buildings, a large apartment window several floors above the street glows warmly: two adults hug, one adult holds a champagne flute, and a young boy and a young girl stand at the window with hot chocolate in their hands and pointing at fireworks. Down on the street below, a lively parade crowd cheers and jumps as confetti and streamers fill the air beneath glowing streetlights and a festive banner across the avenue; in the crowd, a parent lifts a child onto their shoulders and the child points up at the fireworks, a couple takes a selfie with the fireworks above them, and someone laughs with eyes closed while confetti is caught in their hair. Clean outlines, bright festive colors, simple shading, cinematic composition, and a joyful yet slightly reflective holiday mood.",
     images: {
-      qwen: "./static/assets/1/qwen_1.png",
-      gpt: "./static/assets/1/gpt_1.png",
-      nano: "./static/assets/1/gemini_1.png",
-      ours: "./static/assets/1/ours_trace_step1.png",
+      qwen: "./static/assets2/6/qwen.png",
+      gpt: "./static/assets2/6/gpt.png",
+      nano: "./static/assets2/6/gemini.png",
+      ours: "./static/assets2/6/ours.png",
     },
     imageNotes: {
-      qwen: "Incorrect num. of ducks (2 instead of 4).",
-      gpt: "Incorrect num. of ducks (3 instead of 4).",
-      nano: "Incorrect num. of ducks (3 instead of 4).",
+      qwen: "Improper rendering and missing entities such as young boy on window.",
+      gpt: "Incorrect wall time, children not pointing to fireworks.",
+      nano: "Incorrect wall time, children not pointing to fireworks, missing child on shoulders.",
       ours: "Aligned to prompt.",
     },
     imageNoteStatus: {
@@ -78,14 +119,56 @@ const SAMPLE_ROWS = [
     },
     reasoningTrace: [
       {
-        stage: "Step 1 · Layout",
-        comment: "Four ducks are standing on the ground, and a tiny pink giraffe is standing next to them. Three novels are placed on the ground nearby. The image is in a photorealistic style.",
-        image: "./static/assets/1/ours_trace_step0.png",
+        comment: "A warm, animated-cartoon New Year’s night city scene viewed from street level, with tall buildings and a clear sky where fireworks spell..., and a joyful yet slightly reflective holiday mood.",
+        image: "./static/assets2/6/step_0.png",
       },
       {
-        stage: "Step 2 · Lighting",
-        promptSrc: "./static/assets/1/prompt_1_step_1.txt",
-        image: "./static/assets/1/ours_trace_step1.png",
+        comment: "Add a young boy standing at the window alongside the girl with both holding hot chocolate, ensuring both children are pointing at the fireworks while preserving the joyful mood and cinematic composition of the scene.",
+        image: "./static/assets2/6/step_1.png",
+      },
+      {
+        comment: "Add a young boy clearly visible on the window ledge alongside the girl with both holding hot chocolate, and pointing at the fireworks.",
+        image: "./static/assets2/6/step_2.png",
+      },
+      {
+        comment: "Make the 2026 in fireworks clearly visible in the sky while keeping all other details of the scene intact.",
+        image: "./static/assets2/6/step_3.png",
+      },
+      {
+        comment: "Edit the wall clock time to exactly show 12:00 at midnight with hour and minute hands both pointing to 12. Maintain the cinematic composition and festive mood of the scene.",
+        image: "./static/assets2/6/step_4.png",
+      },
+    ],
+  },
+  {
+    prompt: "A surreal landscape split perfectly down the vertical center: on the left, a bright daytime orchard with a large apple tree bearing exactly four red apples, one of which has a bite taken out, while a single ladder leans against the tree; on the right, a moonlit night desert with exactly six glowing paper lanterns floating at different heights, where only the lowest lantern is orange and the others are white. At the center boundary stands a stone fountain split in half, with water flowing upward on the night side and downward on the day side. A lone person walks along the dividing path wearing a coat split vertically, sunlit on the left and moonlit on the right, with their shadow cast only onto the day side.",
+    images: {
+      qwen: "./static/assets2/3/qwen.png",
+      gpt: "./static/assets2/3/gpt.png",
+      nano: "./static/assets2/3/gemini.png",
+      ours: "./static/assets2/3/ours.png",
+    },
+    imageNotes: {
+      qwen: "Low aesthetic for impressionist style.",
+      gpt: "Chicken not with glass-like texture.",
+      nano: "Chicken not with glass-like texture.",
+      ours: "Aligned to prompt.",
+    },
+    imageNoteStatus: {
+      ours: "success",
+    },
+    reasoningTrace: [
+      {
+        comment: "A surreal landscape split perfectly down the vertical center: on the left, a bright daytime orchard with a large apple tree bearing exactly four red apples, one of which has a bite taken out, ...., sunlit on the left and moonlit on the right, with their shadow cast only onto the day side.",
+        image: "./static/assets2/3/step_0.png",
+      },
+      {
+        comment: "Refine the black chicken standing next to the woman on the table, ensuring it has a reflective, glass-like, jewel-like texture, while maintaining the impressionist style of the overall scene.",
+        image: "./static/assets2/3/step_1.png",
+      },
+      {
+        comment: "Edit the black chicken on the table to clearly display a highly reflective, faceted, glass-like or crystalline texture, making it look like a black jewel sculpture, while preserving the impressionistic style of the surrounding scene.",
+        image: "./static/assets2/3/step_2.png",
       },
     ],
   },

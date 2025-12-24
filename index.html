@@ -84,43 +84,42 @@
 
 
 <section class="hero">
-  <div class="hero-body">
+  <div class="hero-body" style="padding-bottom: 0.3rem; padding-top: 1.5rem;">
     <div class="container is-max-desktop">
       <div class="columns is-centered">
-        <div class="column has-text-centered">
+    <div class="column has-text-centered">
           <h1 class="title is-1 publication-title">Iterative Refinement Improves Compositional Image Generation</h1>
           <div class="is-size-5 publication-authors">
             <span class="author-block">
-              <a href="https://shantanuj.github.io">Shantanu Jaiswal</a><sup>1</sup>,</span>
+              <a href="https://shantanuj.github.io">Shantanu Jaiswal</a>,</span>
             <span class="author-block">
-              <a href="https://mihirp1998.github.io">Mihir Prabhudesai</a><sup>1</sup>,</span>
+              <a href="https://mihirp1998.github.io">Mihir Prabhudesai</a>,</span>
             <span class="author-block">
-              <a href="https://www.linkedin.com/in/nikash-bhardwaj">Nikash Bhardwaj</a><sup>1</sup>,
+              <a href="https://www.linkedin.com/in/nikash-bhardwaj">Nikash Bhardwaj</a>,
             </span>
             <span class="author-block">
-              <a href="https://www.linkedin.com/in/zheyang-qin-b2b3b6213">Zheyang Qin</a><sup>1</sup>,
+              <a href="https://www.linkedin.com/in/zheyang-qin-b2b3b6213">Zheyang Qin</a>,
             </span>
             <span class="author-block">
-              <a href="https://scholar.google.com/citations?user=MQFngiMAAAAJ&hl=en">Amir Zadeh</a><sup>2</sup>,
+              <a href="https://scholar.google.com/citations?user=MQFngiMAAAAJ&hl=en">Amir Zadeh</a>,
             </span>
             <span class="author-block">
-              <a href="https://scholar.google.com/citations?user=hoZesOwAAAAJ&hl=en">Chuan Li</a><sup>2</sup>,
+              <a href="https://scholar.google.com/citations?user=hoZesOwAAAAJ&hl=en">Chuan Li</a>,
             </span>
             <span class="author-block">
-              <a href="https://www.cs.cmu.edu/~katef">Katerina Fragkiadaki</a><sup>1</sup>
+              <a href="https://www.cs.cmu.edu/~katef">Katerina Fragkiadaki</a>,
             </span>
             <span class="author-block">
-              <a href="https://www.cs.cmu.edu/~dpathak">Deepak Pathak</a><sup>1</sup>
+              <a href="https://www.cs.cmu.edu/~dpathak">Deepak Pathak</a>
             </span>
           </div>
 
           <div class="is-size-5 publication-authors">
-            <span class="author-block"><sup>1</sup>Carnegie Mellon University,</span>
-            <span class="author-block"><sup>2</sup>Lambda</span>
+            <span class="author-block">Carnegie Mellon University, Lambda</span>
           </div>
 
           <div class="column has-text-centered">
-            <div class="publication-links">
+            <div class="publication-links" style="margin-bottom: 0;">
               <!-- PDF Link. -->
               <span class="link-block">
                 <!-- TODO: Add correct arxiv number -->
@@ -205,17 +204,13 @@
   </div>
 </section> -->
 
-<section class="section" aria-label="Paper TLDR">
-  <div class="container is-max-desktop">
-    <div class="box has-text-centered" style="background-color: #b1d8ff; border-radius: 12px;">
-      <h2 class="title is-4" style="margin-bottom: 0.75rem;">TL;DR</h2>
-      <p class="content" style="margin-bottom: 0;">
-        TL;DR: We introduce an inference-time iterative refinement loop for text-to-image models that reuses intermediate generations instead of one-shot sampling. A generator drafts an image, a VLM critic issues corrections and actions (continue, backtrack, restart, stop), an editor applies sub-prompts, and a verifier tracks alignment. Under matched compute on ConceptMix, T2I-CompBench, and TIIF-Bench, iterative and iterative+parallel variants beat parallel-only baselines by up to +16.9% solve rate (ConceptMix k=7), +13.8% on 3D-spatial T2I, and +5% on TIIF basics. Human raters prefer our iteratively refined images 58.7% vs 41.3%. Our pipeline is simple, tool-free, and generalizes across Qwen, OpenAI, and Gemini models.
-      </p>
-    </div>
+<div class="container is-max-widescreen" style="margin-bottom: 1rem;">
+  <div class="content has-text-centered">
+    <p>
+      <strong>TL;DR:</strong> We introduce a test-time iterative refinement strategy that uses a VLM and image editor in loop to improve compositional text-to-image generation. Under equal compute, our method significantly outperforms parallel sampling across various models (including GPT-Image-1, NanoBanana, and Qwen-Image) on compositional benchmarks and is preferred by human evaluators 59% of the time. 
+    </p>
   </div>
-</section>
-
+</div>
 
 <section class="hero is-light is-small">
   <div class="hero-body">
@@ -486,6 +481,16 @@
     </div>
   </div>
 </footer>
+
+<div class="modal" id="image-modal">
+  <div class="modal-background"></div>
+  <div class="modal-content">
+    <p class="image">
+      <img src="" alt="">
+    </p>
+  </div>
+  <button class="modal-close is-large" aria-label="close"></button>
+</div>
 
 </body>
 </html>
