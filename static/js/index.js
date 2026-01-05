@@ -69,6 +69,54 @@ const SAMPLE_ROWS = [
     ],
   },
   {
+    prompt: "A cozy Christmas Eve bedroom scene where a single child sits on their bed writing a Christmas wishlist in a notebook, holding a pencil in their right hand; exactly three gifts are written clearly on the wishlist, each on its own line: “red bicycle,” “astronomy telescope,” and “wooden train set.” Above the child’s head, a large transparent thought bubble shows the child’s imagination: Santa Claus placing presents under a decorated Christmas tree, with exactly three wrapped gifts beneath the tree that correspond to the wishlist items, where only the bicycle gift has a gold ribbon and the other two have red ribbons; Santa is mid-motion, bending forward with one hand touching a gift and the other holding a sack. Outside the thought bubble, the real bedroom contains no Santa or gifts. In the background, outside the bedroom door, two parents peek in from the hallway, visible only from the shoulders up, smiling softly, while remaining fully outside the room; warm, cinematic Christmas lighting emphasizes the contrast between imagination and reality.",
+    images: {
+      qwen: "./static/assets2/4/qwen.png",
+      gpt: "./static/assets2/4/gpt.png",
+      nano: "./static/assets2/4/gemini.png",
+      ours: "./static/assets2/4/ours.png",
+    },
+    imageNotes: {
+      qwen: "Items misspelled and wrong ribbon binding.",
+      gpt: "Items misspelled and incorrect number of gifts under tree.",
+      nano: "Items not clearly written on wishlist.",
+      ours: "Aligned to prompt.",
+    },
+    imageNoteStatus: {
+      ours: "success",
+    },
+    reasoningTrace: [
+      {
+        comment: "A cozy Christmas Eve bedroom scene where a single child sits on their bed writing a Christmas wishlist in a notebook, .... ; warm, cinematic Christmas lighting emphasizes the contrast between imagination and reality.",
+        image: "./static/assets2/4/step_0.png",
+      },
+      {
+        comment: "Move the five novels from in front of the ducks to behind them, ensuring they are placed on the ground in the background while keeping all other elements in their correct positions.",
+        image: "./static/assets2/4/step_1.png",
+      },
+      {
+        comment: "Edit the image to make space behind the ducks for novels, ensuring they are placed on the ground in the background while keeping all other elements in their correct positions.",
+        image: "./static/assets2/4/step_2.png",
+      },
+      {
+        comment: "Add one more novel behind the ducks, ensuring there are five novels in total and preserving the overall composition.",
+        image: "./static/assets2/4/step_3.png",
+      },
+      {
+        comment: "Edit the bottle held by the giraffe to have only a single knob, and ensure the entire image is in a cartoon style.",
+        image: "./static/assets2/4/step_4.png",
+      },
+      {
+        comment: "Edit the bottle held by the giraffe to have only a single knob, and ensure the entire image is in a cartoon style.",
+        image: "./static/assets2/4/step_5.png",
+      },
+      {
+        comment: "Edit the bottle held by the giraffe to have only a single knob, and ensure the entire image is in a cartoon style.",
+        image: "./static/assets2/4/step_6.png",
+      },
+    ],
+  },
+  {
     prompt: "A woman sits at a table, typing on a red laptop. A black chicken with a glass-like texture stands next to her. A large spider hangs from the ceiling above them. The image has an impressionist style.",
     images: {
       qwen: "./static/assets/2/qwen.png",
@@ -101,7 +149,7 @@ const SAMPLE_ROWS = [
     ],
   },
   {
-    prompt: "A warm, animated-cartoon New Year’s night city scene viewed from street level, with tall buildings and a clear sky where fireworks spell “2026.” In the background, a stone clock tower clearly shows 12:00 at midnight. High up in one of the buildings, a large apartment window several floors above the street glows warmly: two adults hug, one adult holds a champagne flute, and a young boy and a young girl stand at the window with hot chocolate in their hands and pointing at fireworks. Down on the street below, a lively parade crowd cheers and jumps as confetti and streamers fill the air beneath glowing streetlights and a festive banner across the avenue; in the crowd, a parent lifts a child onto their shoulders and the child points up at the fireworks, a couple takes a selfie with the fireworks above them, and someone laughs with eyes closed while confetti is caught in their hair. Clean outlines, bright festive colors, simple shading, cinematic composition, and a joyful yet slightly reflective holiday mood.",
+    prompt: "A warm, animated-cartoon New Year’s night city scene viewed from street level, with tall buildings and a clear sky where fireworks spell “2026.” In the background, a stone clock tower clearly shows 12:00 at midnight. High up in one of the buildings, a large apartment window several floors above the street glows warmly: two adults hug, one adult holds a champagne glass, and a young boy and a young girl stand at the window with hot chocolate in their hands and pointing at fireworks. Down on the street below, a lively parade crowd cheers and jumps as confetti and streamers fill the air beneath glowing streetlights and a festive banner across the avenue; in the crowd, a parent lifts a child onto their shoulders and the child points up at the fireworks, a couple takes a selfie with the fireworks above them, and someone laughs with eyes closed while confetti is caught in their hair. Clean outlines, bright festive colors, simple shading, cinematic composition, and a joyful yet slightly reflective holiday mood.",
     images: {
       qwen: "./static/assets2/6/qwen.png",
       gpt: "./static/assets2/6/gpt.png",
@@ -140,18 +188,19 @@ const SAMPLE_ROWS = [
       },
     ],
   },
+  
   {
-    prompt: "A surreal landscape split perfectly down the vertical center: on the left, a bright daytime orchard with a large apple tree bearing exactly four red apples, one of which has a bite taken out, while a single ladder leans against the tree; on the right, a moonlit night desert with exactly six glowing paper lanterns floating at different heights, where only the lowest lantern is orange and the others are white. At the center boundary stands a stone fountain split in half, with water flowing upward on the night side and downward on the day side. A lone person walks along the dividing path wearing a coat split vertically, sunlit on the left and moonlit on the right, with their shadow cast only onto the day side.",
+    prompt: "A wide cinematic landscape where a glacier gradually melts into open savannah. On the icy side, near blue ice and drifting snow, four animals stand in a straight horizontal line: a polar bear, an arctic fox, a woolly mammoth, and a white tiger. On the grassy side, in warm sunlight, four animals stand in a matching straight horizontal line: a brown bear, a red fox, an elephant, and an orange tiger, framed by tall grass and scattered acacia trees. At the center, ice thins into wet rock and emerging grass, and each animal faces its direct counterpart across the transition—the polar bear faces the brown bear, the arctic fox faces the red fox, the woolly mammoth faces the elephant, and the white tiger faces the orange tiger. No visible barriers separate the two environments. Soft cinematic lighting, animated-movie realism, strong sense of scale, contrast, and wonder.",
     images: {
-      qwen: "./static/assets2/3/qwen.png",
-      gpt: "./static/assets2/3/gpt.png",
-      nano: "./static/assets2/3/gemini.png",
-      ours: "./static/assets2/3/ours.png",
+      qwen: "./static/assets2/2/qwen.png",
+      gpt: "./static/assets2/2/gpt.png",
+      nano: "./static/assets2/2/gemini.png",
+      ours: "./static/assets2/2/ours.png",
     },
     imageNotes: {
-      qwen: "Low aesthetic for impressionist style.",
-      gpt: "Chicken not with glass-like texture.",
-      nano: "Chicken not with glass-like texture.",
+      qwen: "Improper rendering and missing entities such as young boy on window.",
+      gpt: "Incorrect wall time, children not pointing to fireworks.",
+      nano: "Incorrect wall time, children not pointing to fireworks, missing child on shoulders.",
       ours: "Aligned to prompt.",
     },
     imageNoteStatus: {
@@ -159,19 +208,25 @@ const SAMPLE_ROWS = [
     },
     reasoningTrace: [
       {
-        comment: "A surreal landscape split perfectly down the vertical center: on the left, a bright daytime orchard with a large apple tree bearing exactly four red apples, one of which has a bite taken out, ...., sunlit on the left and moonlit on the right, with their shadow cast only onto the day side.",
-        image: "./static/assets2/3/step_0.png",
+        comment: "A warm, animated-cartoon New Year’s night city scene viewed from street level, with tall buildings and a clear sky where fireworks spell..., and a joyful yet slightly reflective holiday mood.",
+        image: "./static/assets2/2/step_0.png",
       },
       {
-        comment: "Refine the black chicken standing next to the woman on the table, ensuring it has a reflective, glass-like, jewel-like texture, while maintaining the impressionist style of the overall scene.",
-        image: "./static/assets2/3/step_1.png",
+        comment: "Add a young boy standing at the window alongside the girl with both holding hot chocolate, ensuring both children are pointing at the fireworks while preserving the joyful mood and cinematic composition of the scene.",
+        image: "./static/assets2/2/step_1.png",
       },
       {
-        comment: "Edit the black chicken on the table to clearly display a highly reflective, faceted, glass-like or crystalline texture, making it look like a black jewel sculpture, while preserving the impressionistic style of the surrounding scene.",
-        image: "./static/assets2/3/step_2.png",
+        comment: "Add a young boy clearly visible on the window ledge alongside the girl with both holding hot chocolate, and pointing at the fireworks.",
+        image: "./static/assets2/2/step_2.png",
       },
+      {
+        comment: "Make the 2026 in fireworks clearly visible in the sky while keeping all other details of the scene intact.",
+        image: "./static/assets2/2/step_3.png",
+      }
     ],
   },
+  
+  
   {
     prompt:
       "In a watercolor painting, there is a tiny broccoli, one sushi roll, a red pizza, and four cactuses. Additionally, there is a large carrot.",
@@ -182,12 +237,13 @@ const SAMPLE_ROWS = [
       ours: "./static/assets/3/ours.png",
     },
     imageNotes: {
-      qwen: "Incorrect num. of cacti (3 instead of 4).",
-      gpt: "Brocolli is not tiny.",
-      nano: "Incorrect num. of cacti (5 instead of 4).",
+      qwen: "Incorrect num. of cacti (2 instead of 4) and broccoli not tiny.",
+      gpt: "Incorrect num. of cacti (3 instead of 4).",
+      nano: "Aligned to prompt.",
       ours: "Aligned to prompt."
     },
     imageNoteStatus: {
+      nano: "success",
       ours: "success",
     },
     reasoningTrace: [
@@ -213,6 +269,76 @@ const SAMPLE_ROWS = [
       },
     ],
   },
+  {
+    prompt: "A surreal landscape split perfectly down the vertical center: on the left, a bright daytime orchard with a large apple tree bearing exactly four red apples, one of which has a bite taken out, while a single ladder leans against the tree; on the right, a moonlit night desert with exactly six glowing paper lanterns floating at different heights, where only the lowest lantern is orange and the others are white. At the center boundary stands a stone fountain split in half, with water flowing upward on the night side and downward on the day side. A lone person walks along the dividing path wearing a coat split vertically, sunlit on the left and moonlit on the right, with their shadow cast only onto the day side.",
+    images: {
+      qwen: "./static/assets2/3/qwen.png",
+      gpt: "./static/assets2/3/gpt.png",
+      nano: "./static/assets2/3/gemini.png",
+      ours: "./static/assets2/3/ours.png",
+    },
+    imageNotes: {
+      qwen: "Incorrect number of apples and man not in center of contrast.",
+      gpt: "Man's shadow not on day side and on night side instead.",
+      nano: "Incorrect number of lanterns.",
+      ours: "Aligned to prompt.",
+    },
+    imageNoteStatus: {
+      ours: "success",
+    },
+    reasoningTrace: [
+      {
+        comment: "A surreal landscape split perfectly down the vertical center: on the left, a bright daytime orchard with a large apple tree bearing exactly four red apples, one of which has a bite taken out, ...., sunlit on the left and moonlit on the right, with their shadow cast only onto the day side.",
+        image: "./static/assets2/3/step_0.png",
+      },
+      {
+        comment: "Refine the black chicken standing next to the woman on the table, ensuring it has a reflective, glass-like, jewel-like texture, while maintaining the impressionist style of the overall scene.",
+        image: "./static/assets2/3/step_1.png",
+      },
+      {
+        comment: "Edit the black chicken on the table to clearly display a highly reflective, faceted, glass-like or crystalline texture, making it look like a black jewel sculpture, while preserving the impressionistic style of the surrounding scene.",
+        image: "./static/assets2/3/step_2.png",
+      },
+    ],
+  },
+  {
+    prompt:
+      "The image is a sketch showing three brown hills with a glass texture, positioned on the left side of a tree.",
+    images: {
+      qwen: "./static/assets/7/qwen.png",
+      gpt: "./static/assets/7/gpt.png",
+      nano: "./static/assets/7/gemini.png",
+      ours: "./static/assets/7/ours.png",
+    },
+    imageNotes: {
+      qwen: "Not glass textured hills.",
+      gpt: "Aligned to prompt.",
+      nano: "Not brown colored hills.",
+      ours: "Aligned to prompt.",
+    },
+    imageNoteStatus: {
+      gpt: "success",
+      ours: "success",
+    },
+    reasoningTrace: [
+      {
+        comment:
+          "The image is a sketch showing three brown hills with a glass texture, positioned on the left side of a tree.",
+        image: "./static/assets/7/step_0.png",
+      },
+      {
+        comment:
+          "Refine the sketch by coloring the three glass-textured hills brown, while maintaining the overall appearance of a detailed pencil sketch. Ensure these structures look like rounded earthen mounds covered in glass texture, rather than highly stylized futuristic domes.",
+        image: "./static/assets/7/step_1.png",
+      },
+      {
+        comment:
+          "Refine the three brown glass structures to emphasize their nature as low, rounded earthen mounds or natural hills covered in the segmented brown glass texture. Soften the geometric appearance slightly so they blend more naturally into the sketched landscape, ensuring they look less like highly artificial domes. Maintain the overall detailed pencil sketch aesthetic.",
+        image: "./static/assets/7/step_2.png",
+      },
+    ],
+  },
+  
   {
     prompt:
       "The image features a heart-shaped giraffe, a tiny pink screwdriver, and a huge robot. The screwdriver is positioned at the bottom of the robot, touching it.",
@@ -316,6 +442,7 @@ const SAMPLE_ROWS = [
       ours: "Aligned to prompt.",
     },
     imageNoteStatus: {
+      gpt: "success",
       ours: "success",
     },
     reasoningTrace: [
@@ -338,42 +465,6 @@ const SAMPLE_ROWS = [
   },
   {
     prompt:
-      "The image is a sketch showing three brown hills with a glass texture, positioned on the left side of a tree.",
-    images: {
-      qwen: "./static/assets/7/qwen.png",
-      gpt: "./static/assets/7/gpt.png",
-      nano: "./static/assets/7/gemini.png",
-      ours: "./static/assets/7/ours.png",
-    },
-    imageNotes: {
-      qwen: "Not brown colored hills.",
-      gpt: "Four hills.",
-      nano: "Not brown colored hills.",
-      ours: "Aligned to prompt.",
-    },
-    imageNoteStatus: {
-      ours: "success",
-    },
-    reasoningTrace: [
-      {
-        comment:
-          "The image is a sketch showing three brown hills with a glass texture, positioned on the left side of a tree.",
-        image: "./static/assets/7/step_0.png",
-      },
-      {
-        comment:
-          "Refine the sketch by coloring the three glass-textured hills brown, while maintaining the overall appearance of a detailed pencil sketch. Ensure these structures look like rounded earthen mounds covered in glass texture, rather than highly stylized futuristic domes.",
-        image: "./static/assets/7/step_1.png",
-      },
-      {
-        comment:
-          "Refine the three brown glass structures to emphasize their nature as low, rounded earthen mounds or natural hills covered in the segmented brown glass texture. Soften the geometric appearance slightly so they blend more naturally into the sketched landscape, ensuring they look less like highly artificial domes. Maintain the overall detailed pencil sketch aesthetic.",
-        image: "./static/assets/7/step_2.png",
-      },
-    ],
-  },
-  {
-    prompt:
       "The image shows a triangular-shaped dirt road, two purple apples, and a screwdriver. The screwdriver is placed on the dirt road, and one apple is on each side of the road.",
     images: {
       qwen: "./static/assets/8/qwen.png",
@@ -382,13 +473,15 @@ const SAMPLE_ROWS = [
       ours: "./static/assets/8/ours.png",
     },
     imageNotes: {
-      qwen: "Apples are not purple.",
-      gpt: "Road not clearly triangular.",
-      nano: "Apples are not purple.",
+      qwen: "Road is not triangular.",
+      gpt: "Aligned to prompt.",
+      nano: "Aligned to prompt.",
       ours: "Aligned to prompt.",
     },
     imageNoteStatus: {
       ours: "success",
+      nano: "success",
+      gpt: "success",
     },
     reasoningTrace: [
       {
@@ -462,7 +555,11 @@ function createModelCard(model, rowIndex, imageSrc, note, noteStatus) {
   const img = $('<img>')
     .attr('src', imageSrc || PLACEHOLDER_IMAGE)
     .attr('alt', `${model.name} result for prompt ${rowIndex + 1}`);
-  figure.append(img);
+
+  // Add overlay
+  const overlay = $('<div>').addClass('hover-overlay').html('<i class="fas fa-search-plus"></i><span>Click to view full</span>');
+  figure.append(img, overlay);
+
   card.append(figure);
 
   if (note) {
@@ -490,7 +587,10 @@ function createTracePanel(traceList, traceId, alwaysVisible = false, showHeading
     const img = $('<img>')
       .attr('src', step.image || PLACEHOLDER_IMAGE)
       .attr('alt', step.stage || `Trace step ${index + 1}`);
-    figure.append(img);
+
+    // Add overlay
+    const overlay = $('<div>').addClass('hover-overlay').html('<i class="fas fa-search-plus"></i><span>Click to view full</span>');
+    figure.append(img, overlay);
 
     const caption = $('<p>').html(
       `<strong>Step ${index + 1}.</strong> ${step.comment || 'Critic/refinement instruction not provided.'}`
@@ -783,4 +883,23 @@ $(document).ready(function() {
       });
     });
 
+    // Modal Logic
+    var $modal = $('#image-modal');
+    var $modalImg = $modal.find('.modal-content img');
+
+    function openModal(src) {
+      $modalImg.attr('src', src);
+      $modal.addClass('is-active');
+    }
+
+    function closeModal() {
+      $modal.removeClass('is-active');
+      $modalImg.attr('src', '');
+    }
+
+    $('.modal-background, .modal-close').click(closeModal);
+
+    $(document).on('click', '.model-card img, .trace-step img', function() {
+      openModal($(this).attr('src'));
+    });
 })

@@ -32,12 +32,12 @@
   <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="stylesheet" href="./static/css/index.css">
-  <link rel="icon" href="./static/images/favicon.svg?v=3">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script defer src="./static/js/fontawesome.all.min.js"></script>
   <script src="./static/js/bulma-carousel.min.js"></script>
   <script src="./static/js/bulma-slider.min.js"></script>
+  
   <script src="./static/js/index.js?v=3"></script>
 </head>
 <body>
@@ -170,7 +170,7 @@
                   <span class="icon">
                       <i class="fas fa-play"></i>
                   </span>
-                  <span>Demo</span>
+                  <span>Gallery</span>
                 </a>
               </span>
               <!-- Dataset Link. -->
@@ -207,7 +207,7 @@
 <div class="container is-max-widescreen" style="margin-bottom: 1rem;">
   <div class="content has-text-centered">
     <p>
-      <strong>TL;DR:</strong> We introduce a test-time iterative refinement strategy that uses a VLM and image editor in loop to improve compositional text-to-image generation. Under equal compute, our method significantly outperforms parallel sampling across various models (including GPT-Image-1, NanoBanana, and Qwen-Image) on compositional benchmarks and is preferred by human evaluators 59% of the time. 
+      <strong>TL;DR:</strong> We introduce a test-time iterative refinement strategy that uses a VLM feedback critic and image editor in loop to improve compositional text-to-image generation. Our method significantly outperforms compute-matched parallel sampling across various models (including GPT-Image-1, NanoBanana, and Qwen-Image) on compositional generation benchmarks and is preferred by human evaluators 59% of the time. 
     </p>
   </div>
 </div>
@@ -279,7 +279,7 @@
         <div class="content has-text-centered">
           <img src="./static/images/iclr_method (2).png" alt="Method Overview" style="max-width: 100%; height: auto;">
           <p style="font-size: 0.9em; color: #666; margin-top: 10px;">
-            Our iterative refinement framework combines a generator, critic, editor, and verifier for progressive image improvement.
+            Our iterative refinement framework combines a generator, feedback critic, editor, and verifier for progressive image improvement.
           </p>
         </div>
       </div>
@@ -327,21 +327,21 @@
 
         <div class="columns is-variable is-5">
           <div class="column is-6">
-            <h4 class="title is-5">Comparison with Existing Methods</h4>
+            <h4 class="title is-5">Comparison with Prior Compositional Generation Methods</h4>
             <div class="content has-text-centered">
               <img src="./static/images/comp_method_comparison_clear_background.png" alt="Method Comparison" style="max-width: 100%; height: auto;">
               <p style="font-size: 0.9em; color: #666; margin-top: 10px;">
-                Comparison against existing compositional generation methods.
+                As shown, our method consistently outperforms prior compositional generation methods that utilize tools (GenArtists) or regional priors (RPG), and scales better at higher binding complexities.
               </p>
             </div>
           </div>
 
           <div class="column is-6">
-            <h4 class="title is-5">ConceptMix k=1 to k=7</h4>
+            <h4 class="title is-5">Performances across Frontier T2I Models on different prompt complexities</h4>
             <div class="content has-text-centered">
               <img src="./static/images/conceptmix_k1_to_k7_comparison_clear_background.png" alt="ConceptMix k=1 to k=7 comparison" style="max-width: 100%; height: auto;">
               <p style="font-size: 0.9em; color: #666; margin-top: 10px;">
-                Performance of experimented models on ConceptMix k=1 to k=7 comparison for different models. As shown, our method consistently improves over the baseline across models and prompt complexities.
+                Performance of experimented models on ConceptMix k=1 to k=7 comparison for different models. As shown, our method consistently improves over the parallel sampling across models and prompt complexities.
               </p>
             </div>
           </div>
@@ -390,10 +390,10 @@
     <!-- Interactive Demo -->
     <div class="columns is-centered">
       <div class="column is-full-width">
-        <h2 class="title is-3">Interactive Demo</h2>
+        <h2 class="title is-3">Gallery</h2>
         <div class="content has-text-justified">
           <p>
-            Explore our interactive visualization to see the iterative refinement process in action. Compare our method against baseline approaches across multiple challenging prompts, and examine the step-by-step reasoning traces that guide the refinement process.
+            The gallery contains examples of our method compared to baseline approaches across different types of compositional prompts, and provides the step-by-step reasoning traces in the refinement process.
           </p>
         </div>
         <div class="content has-text-centered">
@@ -401,10 +401,10 @@
             <span class="icon">
               <i class="fas fa-play"></i>
             </span>
-            <span>Launch Interactive Demo</span>
+            <span>Open Gallery</span>
           </a>
           <p style="font-size: 0.9em; color: #666; margin-top: 15px;">
-            Interactive comparison of iterative refinement vs. baseline methods with detailed reasoning traces.
+            Gallery of iterative refinement vs. baseline methods with detailed reasoning traces.
           </p>
         </div>
       </div>
@@ -421,6 +421,180 @@
           <p>
             <strong>Chain-of-Thought Reasoning in Large Language Models.</strong> Chain-of-thought (CoT) prompting has been shown to elicit multi-step reasoning and improve performance on complex language tasks. Drawing inspiration from these strategies, our method applies a similar iterative reasoning paradigm to T2I generation: the critic functions analogously to a CoT process, enabling high-fidelity compositional image synthesis.
           </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Limitations -->
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Limitations</h2>
+        <div class="content has-text-justified">
+          <p>
+            Our method is subject to the limitations of its component models, primarily manifesting in two error modes:
+          </p>
+          <ul>
+            <li>
+              <strong>VLM Imperfect Critic:</strong> The VLM acting as a critic may fail to accurately identify discrepancies between the image and the text prompt, leading to missing or incorrect feedback.
+            </li>
+            <li>
+              <strong>Edit Model Imperfect Editor:</strong> The image editing model may fail to execute the requested corrections perfectly, sometimes ignoring the edit instruction or introducing artifacts in the process.
+            </li>
+          </ul>
+          <p>
+            We show examples of these failure modes below.
+          </p>
+        </div>
+
+        <!-- Failure Case 1 -->
+        <div class="box has-background-light mb-5">
+          <h4 class="title is-5">Failure Case 1: Imperfect Editor</h4>
+          <p class="subtitle is-6">
+            <strong>Prompt:</strong> "The image features a heart-shaped giraffe, a tiny pink screwdriver, and a huge robot. The screwdriver is positioned at the bottom of the robot, touching it."
+          </p>
+          <div class="columns">
+            <!-- Final Result -->
+            <div class="column is-3 has-text-centered">
+              <figure class="image is-1by1" style="margin-bottom: 0.5rem; border: 1px solid #ddd; border-radius: 4px; overflow: hidden; background: white;">
+                <img src="./static/assets/4/ours.png" alt="Final Result" style="object-fit: contain;">
+              </figure>
+              <p class="is-size-7"><strong>Our Result</strong></p>
+              <p class="is-size-7 has-text-danger">Giraffe not exactly heart-shaped.</p>
+            </div>
+
+            <!-- Scrollable Trace -->
+            <div class="column is-9">
+              <p class="is-size-7 has-text-weight-bold mb-2">Reasoning Trace (Scroll to see steps)</p>
+              <div style="display: flex; overflow-x: auto; gap: 1rem; padding-bottom: 1rem;">
+                
+                <!-- Step 0 -->
+                <div style="min-width: 150px; display: flex; flex-direction: column;">
+                  <figure class="image is-1by1" style="border: 1px solid #ddd; border-radius: 4px; overflow: hidden; background: white;">
+                    <img src="./static/assets/4/step_0.png" alt="Step 0">
+                  </figure>
+                  <p class="is-size-7 mt-1 has-text-grey"><strong>Step 1</strong></p>
+                  <p class="is-size-7" style="font-size: 0.65rem; line-height: 1.2;">
+                    The image features a heart-shaped giraffe, a tiny pink screwdriver...
+                  </p>
+                </div>
+
+                <!-- Step 1 -->
+                <div style="min-width: 150px; display: flex; flex-direction: column;">
+                  <figure class="image is-1by1" style="border: 1px solid #ddd; border-radius: 4px; overflow: hidden; background: white;">
+                    <img src="./static/assets/4/step_1.png" alt="Step 1">
+                  </figure>
+                  <p class="is-size-7 mt-1 has-text-grey"><strong>Step 2</strong></p>
+                  <p class="is-size-7" style="font-size: 0.65rem; line-height: 1.2;">
+                    Reposition the tiny pink screwdriver so that it is clearly touching...
+                  </p>
+                </div>
+
+                <!-- Step 2 -->
+                <div style="min-width: 150px; display: flex; flex-direction: column;">
+                  <figure class="image is-1by1" style="border: 1px solid #ddd; border-radius: 4px; overflow: hidden; background: white;">
+                    <img src="./static/assets/4/step_2.png" alt="Step 2">
+                  </figure>
+                  <p class="is-size-7 mt-1 has-text-grey"><strong>Step 3</strong></p>
+                  <p class="is-size-7" style="font-size: 0.65rem; line-height: 1.2;">
+                    Ensure the tiny pink screwdriver is visibly touching...
+                  </p>
+                </div>
+
+                <!-- Step 3 -->
+                <div style="min-width: 150px; display: flex; flex-direction: column;">
+                  <figure class="image is-1by1" style="border: 1px solid #ddd; border-radius: 4px; overflow: hidden; background: white;">
+                    <img src="./static/assets/4/step_3.png" alt="Step 3">
+                  </figure>
+                  <p class="is-size-7 mt-1 has-text-grey"><strong>Step 4</strong></p>
+                  <p class="is-size-7" style="font-size: 0.65rem; line-height: 1.2;">
+                    Introduce a tiny pink screwdriver lying on the ground...
+                  </p>
+                </div>
+
+                <!-- Step 4 -->
+                <div style="min-width: 150px; display: flex; flex-direction: column;">
+                  <figure class="image is-1by1" style="border: 1px solid #ddd; border-radius: 4px; overflow: hidden; background: white;">
+                    <img src="./static/assets/4/step_4.png" alt="Step 4">
+                  </figure>
+                  <p class="is-size-7 mt-1 has-text-grey"><strong>Step 5</strong></p>
+                  <p class="is-size-7" style="font-size: 0.65rem; line-height: 1.2;">
+                    Refine the image to ensure the tiny pink screwdriver...
+                  </p>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Failure Case 2 -->
+        <div class="box has-background-light">
+          <h4 class="title is-5">Failure Case 2: Imperfect Editor/Critic</h4>
+          <p class="subtitle is-6">
+            <strong>Prompt:</strong> "A pixel art image shows a tiny pine tree with two carrots positioned in front of it. There is also a house in the scene."
+          </p>
+          <div class="columns">
+            <!-- Final Result -->
+            <div class="column is-3 has-text-centered">
+              <figure class="image is-1by1" style="margin-bottom: 0.5rem; border: 1px solid #ddd; border-radius: 4px; overflow: hidden; background: white;">
+                <img src="./static/assets/5/ours.png" alt="Final Result" style="object-fit: contain;">
+              </figure>
+              <p class="is-size-7"><strong>Our Result</strong></p>
+              <p class="is-size-7 has-text-danger">Carrots not directly in front of pine.</p>
+            </div>
+
+            <!-- Scrollable Trace -->
+            <div class="column is-9">
+              <p class="is-size-7 has-text-weight-bold mb-2">Reasoning Trace (Scroll to see steps)</p>
+              <div style="display: flex; overflow-x: auto; gap: 1rem; padding-bottom: 1rem;">
+                
+                <!-- Step 0 -->
+                <div style="min-width: 150px; display: flex; flex-direction: column;">
+                  <figure class="image is-1by1" style="border: 1px solid #ddd; border-radius: 4px; overflow: hidden; background: white;">
+                    <img src="./static/assets/5/step_0.png" alt="Step 0">
+                  </figure>
+                  <p class="is-size-7 mt-1 has-text-grey"><strong>Step 1</strong></p>
+                  <p class="is-size-7" style="font-size: 0.65rem; line-height: 1.2;">
+                    A pixel art image shows a tiny pine tree...
+                  </p>
+                </div>
+
+                <!-- Step 1 -->
+                <div style="min-width: 150px; display: flex; flex-direction: column;">
+                  <figure class="image is-1by1" style="border: 1px solid #ddd; border-radius: 4px; overflow: hidden; background: white;">
+                    <img src="./static/assets/5/step_1.png" alt="Step 1">
+                  </figure>
+                  <p class="is-size-7 mt-1 has-text-grey"><strong>Step 2</strong></p>
+                  <p class="is-size-7" style="font-size: 0.65rem; line-height: 1.2;">
+                    Edit the pixel art image by making the large pine tree...
+                  </p>
+                </div>
+
+                <!-- Step 2 -->
+                <div style="min-width: 150px; display: flex; flex-direction: column;">
+                  <figure class="image is-1by1" style="border: 1px solid #ddd; border-radius: 4px; overflow: hidden; background: white;">
+                    <img src="./static/assets/5/step_2.png" alt="Step 2">
+                  </figure>
+                  <p class="is-size-7 mt-1 has-text-grey"><strong>Step 3</strong></p>
+                  <p class="is-size-7" style="font-size: 0.65rem; line-height: 1.2;">
+                    Edit the image to clearly show exactly two distinct...
+                  </p>
+                </div>
+
+                <!-- Step 3 -->
+                <div style="min-width: 150px; display: flex; flex-direction: column;">
+                  <figure class="image is-1by1" style="border: 1px solid #ddd; border-radius: 4px; overflow: hidden; background: white;">
+                    <img src="./static/assets/5/step_3.png" alt="Step 3">
+                  </figure>
+                  <p class="is-size-7 mt-1 has-text-grey"><strong>Step 4</strong></p>
+                  <p class="is-size-7" style="font-size: 0.65rem; line-height: 1.2;">
+                    Edit the image to reposition the two distinct carrots...
+                  </p>
+                </div>
+
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
