@@ -364,7 +364,7 @@
             <div class="content has-text-centered">
               <img src="./static/images/comparison_parallel_iterative.png" alt="ConceptMix Results" style="max-width: 100%; height: auto;">
               <p style="font-size: 0.9em; color: #666; margin-top: 10px;">
-                Performance gains on ConceptMix benchmark across different binding complexities.
+                Breakdown of performances across different ConceptMix categories.
               </p>
             </div>
           </div>
@@ -374,7 +374,7 @@
             <div class="content has-text-centered">
               <img src="./static/images/conceptmix_budget_same_symbols.png" alt="Comparison of iterative and parallel compute allocations" style="max-width: 100%; height: auto;">
               <p style="font-size: 0.9em; color: #666; margin-top: 10px;">
-                Comparison of iterative and parallel compute allocations. Given a budget of $B=16$, mixed allocations of 8 iterative with 2 parallel generally outperform purely parallel or purely iterative strategies.
+                Comparison of iterative and parallel compute allocations. Given a test-time budget of 16 steps, higher iterative allocations (e.g. 8 iterative with 2 parallel) outperform purely parallel sampling or purely iterative refinement strategies.
               </p>
             </div>
           </div>
@@ -459,7 +459,7 @@
 
         <!-- Failure Case 1 -->
         <div class="box has-background-light mb-5">
-          <h4 class="title is-5">Failure Case 1: Imperfect Editor</h4>
+          <h4 class="title is-5">Failure Case 1: Imperfect Critic</h4>
           <p class="subtitle is-6">
             <strong>Prompt:</strong> "The image features a heart-shaped giraffe, a tiny pink screwdriver, and a huge robot. The screwdriver is positioned at the bottom of the robot, touching it."
           </p>
@@ -470,7 +470,7 @@
                 <img src="./static/assets/4/ours.png" alt="Final Result" style="object-fit: contain;">
               </figure>
               <p class="is-size-7"><strong>Our Result</strong></p>
-              <p class="is-size-7 has-text-danger">Giraffe not exactly heart-shaped.</p>
+              <p class="is-size-7 has-text-danger">Giraffe not exactly heart-shaped (and was not detected by the critic).</p>
             </div>
 
             <!-- Scrollable Trace -->
@@ -551,7 +551,7 @@
                 <img src="./static/assets/5/ours.png" alt="Final Result" style="object-fit: contain;">
               </figure>
               <p class="is-size-7"><strong>Our Result</strong></p>
-              <p class="is-size-7 has-text-danger">Carrots not directly in front of pine.</p>
+              <p class="is-size-7 has-text-danger">Carrots not placed directly in front of pine by editor (and was not detected by the critic).</p>
             </div>
 
             <!-- Scrollable Trace -->
