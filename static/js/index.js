@@ -164,7 +164,7 @@ const SAMPLE_ROWS = [
         image: "./static/assets2/4/step_0.png",
       },
       {
-        comment: "Move the five novels from in front of the ducks to behind them, ensuring they are placed on the ground in the background while keeping all other elements in their correct positions.",
+        comment: "Correct the handwritten text in the notebook to fix the spelling error: change 'astronmy telecope' to 'astronomy telescope'. In the thought bubble, change the ribbon color on the red gift box to red, ensuring that only the bicycle retains a gold ribbon.",
         image: "./static/assets2/4/step_1.png",
       },
       {
