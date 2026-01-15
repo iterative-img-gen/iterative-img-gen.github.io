@@ -80,6 +80,7 @@ body {
 
 .author-block {
   display: inline-block;
+  padding: 0 10px;
 }
 
 .publication-banner img {
