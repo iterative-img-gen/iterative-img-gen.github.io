@@ -140,6 +140,38 @@ const SAMPLE_ROWS = [
       },
     ],
   },
+  {
+    prompt: "Glacier-to-savannah cinematic panorama: icy side (blue ice, snow) has polar bear, arctic fox, woolly mammoth, white tiger in a straight line; warm grassy side has brown bear, red fox, elephant, orange tiger aligned opposite, each facing its counterpart. Seamless transition, no barriers. Soft cinematic light, animated realism, epic scale.",
+    images: {
+      qwen: "./static/assets2/2/qwen.png",
+      gpt: "./static/assets2/2/gpt.png",
+      nano: "./static/assets2/2/gemini.png",
+      ours: "./static/assets2/2/ours.png",
+    },
+    imageNotes: {
+      qwen: "Missing animals and not on correct side of transition.",
+      gpt: "Missing animals.",
+      nano: "Missing animals and some not on correct side of transition.",
+      ours: "Aligned to prompt.",
+    },
+    imageNoteStatus: {
+      ours: "success",
+    },
+    reasoningTrace: [
+      {
+        comment: "A warm, animated-cartoon New Year’s night city scene viewed from street level, with tall buildings and a clear sky where fireworks spell..., and a joyful yet slightly reflective holiday mood.",
+        image: "./static/assets2/2/step_0.png",
+      },
+      {
+        comment: "Add a white tiger to the snowy icy side of the panorama, positioned on the ice to face the orange tiger on the grassy side. Adjust the placement of the animals to form two straight lines facing each other across the divide.",
+        image: "./static/assets2/2/step_1.png",
+      },
+      {
+        comment: "Remove the extra partial small brown bear between the elephant and brown bear. Ensure the transition between the icy and grassy environments remains seamless without any physical barriers.",
+        image: "./static/assets2/2/step_2.png",
+      },
+    ],
+  },
   
   {
     prompt: "A cozy Christmas Eve bedroom scene where a single child sits on their bed writing a Christmas wishlist in a notebook, holding a pencil in their right hand; exactly three gifts are written clearly on the wishlist, each on its own line: “red bicycle,” “astronomy telescope,” and “wooden train set.” Above the child’s head, a large transparent thought bubble shows the child’s imagination: Santa Claus placing presents under a decorated Christmas tree, with exactly three wrapped gifts beneath the tree that correspond to the wishlist items, where only the bicycle gift has a gold ribbon and the other two have red ribbons; Santa is mid-motion, bending forward with one hand touching a gift and the other holding a sack. Outside the thought bubble, the real bedroom contains no Santa or gifts. In the background, outside the bedroom door, two parents peek in from the hallway, visible only from the shoulders up, smiling softly, while remaining fully outside the room; warm, cinematic Christmas lighting emphasizes the contrast between imagination and reality.",
@@ -190,39 +222,6 @@ const SAMPLE_ROWS = [
     ],
   },
  
-   
-  {
-    prompt: "Glacier-to-savannah cinematic panorama: icy side (blue ice, snow) has polar bear, arctic fox, woolly mammoth, white tiger in a straight line; warm grassy side has brown bear, red fox, elephant, orange tiger aligned opposite, each facing its counterpart. Seamless transition, no barriers. Soft cinematic light, animated realism, epic scale.",
-    images: {
-      qwen: "./static/assets2/2/qwen.png",
-      gpt: "./static/assets2/2/gpt.png",
-      nano: "./static/assets2/2/gemini.png",
-      ours: "./static/assets2/2/ours.png",
-    },
-    imageNotes: {
-      qwen: "Missing animals and not on correct side of transition.",
-      gpt: "Missing animals and not on correct side of transition.",
-      nano: "Missing animals and not on correct side of transition.",
-      ours: "Aligned to prompt.",
-    },
-    imageNoteStatus: {
-      ours: "success",
-    },
-    reasoningTrace: [
-      {
-        comment: "A warm, animated-cartoon New Year’s night city scene viewed from street level, with tall buildings and a clear sky where fireworks spell..., and a joyful yet slightly reflective holiday mood.",
-        image: "./static/assets2/2/step_0.png",
-      },
-      {
-        comment: "Add a white tiger to the snowy icy side of the panorama, positioned on the ice to face the orange tiger on the grassy side. Adjust the placement of the animals to form two straight lines facing each other across the divide.",
-        image: "./static/assets2/2/step_1.png",
-      },
-      {
-        comment: "Remove the extra small brown creature standing behind the elephant and ensure the transition between the icy and grassy environments remains seamless without any physical barriers.",
-        image: "./static/assets2/2/step_2.png",
-      },
-    ],
-  },
   
   
   {
