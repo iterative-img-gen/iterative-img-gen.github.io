@@ -69,6 +69,40 @@ const SAMPLE_ROWS = [
     ],
   },
   {
+    prompt: "Glacier-to-savannah cinematic panorama: icy side (blue ice, snow) has polar bear, arctic fox, woolly mammoth, white tiger in a straight line; warm grassy side has brown bear, red fox, elephant, orange tiger aligned opposite, each facing its counterpart. Seamless transition, no barriers. Soft cinematic light, animated realism, epic scale.",
+    images: {
+      qwen: "./static/assets2/2/qwen.png",
+      gpt: "./static/assets2/2/gpt.png",
+      nano: "./static/assets2/2/gemini.png",
+      ours: "./static/assets2/2/ours.png",
+    },
+    imageNotes: {
+      qwen: "Missing animals and not on correct side of transition.",
+      gpt: "Missing animals.",
+      nano: "Missing animals and some not on correct side of transition.",
+      ours: "Aligned to prompt.",
+    },
+    imageNoteStatus: {
+      ours: "success",
+    },
+    reasoningTrace: [
+      {
+        comment: "Glacier-to-savannah cinematic panorama: icy side (blue ice, snow) has polar bear, arctic fox, woolly mammoth, white tiger in a straight line; ... Seamless transition, no barriers. Soft cinematic light, animated realism, epic scale.",
+        image: "./static/assets2/2/step_0.png",
+      },
+      {
+        comment: "Add a white tiger to the snowy icy side of the panorama, positioned on the ice to face the orange tiger on the grassy side. Adjust the placement of the animals to form two straight lines facing each other across the divide.",
+        image: "./static/assets2/2/step_1.png",
+      },
+      {
+        comment: "Remove the extra partial small brown bear between the elephant and brown bear. Ensure the transition between the icy and grassy environments remains seamless without any physical barriers.",
+        image: "./static/assets2/2/step_2.png",
+      },
+    ],
+  },
+  
+  
+  {
     prompt: "A warm, animated-cartoon New Year’s night city scene viewed from street level, with tall buildings and a clear sky where fireworks spell “2026.” In the background, a stone clock tower clearly shows 12:00 at midnight. High up in one of the buildings, a large apartment window several floors above the street glows warmly: two adults hug, one adult holds a champagne glass, and a young boy and a young girl stand at the window with hot chocolate in their hands and pointing at fireworks. Down on the street below, a lively parade crowd cheers and jumps as confetti and streamers fill the air beneath glowing streetlights and a festive banner across the avenue; in the crowd, a parent lifts a child onto their shoulders and the child points up at the fireworks, a couple takes a selfie with the fireworks above them, and someone laughs with eyes closed while confetti is caught in their hair. Clean outlines, bright festive colors, simple shading, cinematic composition, and a joyful yet slightly reflective holiday mood.",
     images: {
       qwen: "./static/assets2/6/qwen.png",
@@ -140,88 +174,7 @@ const SAMPLE_ROWS = [
       },
     ],
   },
-  {
-    prompt: "Glacier-to-savannah cinematic panorama: icy side (blue ice, snow) has polar bear, arctic fox, woolly mammoth, white tiger in a straight line; warm grassy side has brown bear, red fox, elephant, orange tiger aligned opposite, each facing its counterpart. Seamless transition, no barriers. Soft cinematic light, animated realism, epic scale.",
-    images: {
-      qwen: "./static/assets2/2/qwen.png",
-      gpt: "./static/assets2/2/gpt.png",
-      nano: "./static/assets2/2/gemini.png",
-      ours: "./static/assets2/2/ours.png",
-    },
-    imageNotes: {
-      qwen: "Missing animals and not on correct side of transition.",
-      gpt: "Missing animals.",
-      nano: "Missing animals and some not on correct side of transition.",
-      ours: "Aligned to prompt.",
-    },
-    imageNoteStatus: {
-      ours: "success",
-    },
-    reasoningTrace: [
-      {
-        comment: "A warm, animated-cartoon New Year’s night city scene viewed from street level, with tall buildings and a clear sky where fireworks spell..., and a joyful yet slightly reflective holiday mood.",
-        image: "./static/assets2/2/step_0.png",
-      },
-      {
-        comment: "Add a white tiger to the snowy icy side of the panorama, positioned on the ice to face the orange tiger on the grassy side. Adjust the placement of the animals to form two straight lines facing each other across the divide.",
-        image: "./static/assets2/2/step_1.png",
-      },
-      {
-        comment: "Remove the extra partial small brown bear between the elephant and brown bear. Ensure the transition between the icy and grassy environments remains seamless without any physical barriers.",
-        image: "./static/assets2/2/step_2.png",
-      },
-    ],
-  },
   
-  {
-    prompt: "A cozy Christmas Eve bedroom scene where a single child sits on their bed writing a Christmas wishlist in a notebook, holding a pencil in their right hand; exactly three gifts are written clearly on the wishlist, each on its own line: “red bicycle,” “astronomy telescope,” and “wooden train set.” Above the child’s head, a large transparent thought bubble shows the child’s imagination: Santa Claus placing presents under a decorated Christmas tree, with exactly three wrapped gifts beneath the tree that correspond to the wishlist items, where only the bicycle gift has a gold ribbon and the other two have red ribbons; Santa is mid-motion, bending forward with one hand touching a gift and the other holding a sack. Outside the thought bubble, the real bedroom contains no Santa or gifts. In the background, outside the bedroom door, two parents peek in from the hallway, visible only from the shoulders up, smiling softly, while remaining fully outside the room; warm, cinematic Christmas lighting emphasizes the contrast between imagination and reality.",
-    images: {
-      qwen: "./static/assets2/4/qwen.png",
-      gpt: "./static/assets2/4/gpt.png",
-      nano: "./static/assets2/4/gemini.png",
-      ours: "./static/assets2/4/ours.png",
-    },
-    imageNotes: {
-      qwen: "Items misspelled and wrong ribbon binding.",
-      gpt: "Items misspelled and incorrect number of gifts under tree.",
-      nano: "Items not clearly written on wishlist.",
-      ours: "Aligned to prompt.",
-    },
-    imageNoteStatus: {
-      ours: "success",
-    },
-    reasoningTrace: [
-      {
-        comment: "A cozy Christmas Eve bedroom scene where a single child sits on their bed writing a Christmas wishlist in a notebook, .... ; warm, cinematic Christmas lighting emphasizes the contrast between imagination and reality.",
-        image: "./static/assets2/4/step_0.png",
-      },
-      {
-        comment: "Correct the handwritten text in the notebook to fix the spelling error: change 'astronmy telecope' to 'astronomy telescope'. In the thought bubble, change the ribbon color on the red gift box to red, ensuring that only the bicycle retains a gold ribbon.",
-        image: "./static/assets2/4/step_1.png",
-      },
-      {
-        comment: "Fix the spelling error in the notebook: write 'astronomy telecope' to 'astronomy telescope'. Remove a gift box from under the tree so there are exactly three wrappedgifts under the tree.",
-        image: "./static/assets2/4/step_2.png",
-      },
-      {
-        comment: ".",
-        image: "./static/assets2/4/step_3.png",
-      },
-      {
-        comment: "Edit the bottle held by the giraffe to have only a single knob, and ensure the entire image is in a cartoon style.",
-        image: "./static/assets2/4/step_4.png",
-      },
-      {
-        comment: "Edit the bottle held by the giraffe to have only a single knob, and ensure the entire image is in a cartoon style.",
-        image: "./static/assets2/4/step_5.png",
-      },
-      {
-        comment: "Edit the bottle held by the giraffe to have only a single knob, and ensure the entire image is in a cartoon style.",
-        image: "./static/assets2/4/step_6.png",
-      },
-    ],
-  },
- 
   
   
   {
@@ -266,38 +219,7 @@ const SAMPLE_ROWS = [
       },
     ],
   },
-  {
-    prompt: "A surreal landscape split perfectly down the vertical center: on the left, a bright daytime orchard with a large apple tree bearing exactly four red apples, one of which has a bite taken out, while a single ladder leans against the tree; on the right, a moonlit night desert with exactly six glowing paper lanterns floating at different heights, where only the lowest lantern is orange and the others are white. At the center boundary stands a stone fountain split in half, with water flowing upward on the night side and downward on the day side. A lone person walks along the dividing path wearing a coat split vertically, sunlit on the left and moonlit on the right, with their shadow cast only onto the day side.",
-    images: {
-      qwen: "./static/assets2/3/qwen.png",
-      gpt: "./static/assets2/3/gpt.png",
-      nano: "./static/assets2/3/gemini.png",
-      ours: "./static/assets2/3/ours.png",
-    },
-    imageNotes: {
-      qwen: "Incorrect number of apples and man not in center of contrast.",
-      gpt: "Man's shadow not on day side and on night side instead.",
-      nano: "Incorrect number of lanterns.",
-      ours: "Aligned to prompt.",
-    },
-    imageNoteStatus: {
-      ours: "success",
-    },
-    reasoningTrace: [
-      {
-        comment: "A surreal landscape split perfectly down the vertical center: on the left, a bright daytime orchard with a large apple tree bearing exactly four red apples, one of which has a bite taken out, ...., sunlit on the left and moonlit on the right, with their shadow cast only onto the day side.",
-        image: "./static/assets2/3/step_0.png",
-      },
-      {
-        comment: "Refine the black chicken standing next to the woman on the table, ensuring it has a reflective, glass-like, jewel-like texture, while maintaining the impressionist style of the overall scene.",
-        image: "./static/assets2/3/step_1.png",
-      },
-      {
-        comment: "Edit the black chicken on the table to clearly display a highly reflective, faceted, glass-like or crystalline texture, making it look like a black jewel sculpture, while preserving the impressionistic style of the surrounding scene.",
-        image: "./static/assets2/3/step_2.png",
-      },
-    ],
-  },
+  
   {
     prompt:
       "The image is a sketch showing three brown hills with a glass texture, positioned on the left side of a tree.",

@@ -411,7 +411,7 @@
         { name: "Iter-Refine (ours)", key: "ours" },
       ];
 
-const SAMPLE_ROWS = [
+      const SAMPLE_ROWS = [
   
   {
     prompt: "Four ducks are standing on the ground, and a tiny pink giraffe is standing in front of them holding a bottle with a ship inside it. Five novels are placed on the ground behind the ducks. The image is in a cartoon style.",
@@ -453,18 +453,20 @@ const SAMPLE_ROWS = [
       },
     ],
   },
+  
+  
   {
-    prompt: "A cozy Christmas Eve bedroom scene where a single child sits on their bed writing a Christmas wishlist in a notebook, holding a pencil in their right hand; exactly three gifts are written clearly on the wishlist, each on its own line: “red bicycle,” “astronomy telescope,” and “wooden train set.” Above the child’s head, a large transparent thought bubble shows the child’s imagination: Santa Claus placing presents under a decorated Christmas tree, with exactly three wrapped gifts beneath the tree that correspond to the wishlist items, where only the bicycle gift has a gold ribbon and the other two have red ribbons; Santa is mid-motion, bending forward with one hand touching a gift and the other holding a sack. Outside the thought bubble, the real bedroom contains no Santa or gifts. In the background, outside the bedroom door, two parents peek in from the hallway, visible only from the shoulders up, smiling softly, while remaining fully outside the room; warm, cinematic Christmas lighting emphasizes the contrast between imagination and reality.",
+    prompt: "Glacier-to-savannah cinematic panorama: icy side (blue ice, snow) has polar bear, arctic fox, woolly mammoth, white tiger in a straight line; warm grassy side has brown bear, red fox, elephant, orange tiger aligned opposite, each facing its counterpart. Seamless transition, no barriers. Soft cinematic light, animated realism, epic scale.",
     images: {
-      qwen: "./static/assets2/4/qwen.png",
-      gpt: "./static/assets2/4/gpt.png",
-      nano: "./static/assets2/4/gemini.png",
-      ours: "./static/assets2/4/ours.png",
+      qwen: "./static/assets2/2/qwen.png",
+      gpt: "./static/assets2/2/gpt.png",
+      nano: "./static/assets2/2/gemini.png",
+      ours: "./static/assets2/2/ours.png",
     },
     imageNotes: {
-      qwen: "Items misspelled and wrong ribbon binding.",
-      gpt: "Items misspelled and incorrect number of gifts under tree.",
-      nano: "Items not clearly written on wishlist.",
+      qwen: "Missing animals and not on correct side of transition.",
+      gpt: "Missing animals.",
+      nano: "Missing animals and some not on correct side of transition.",
       ours: "Aligned to prompt.",
     },
     imageNoteStatus: {
@@ -472,32 +474,16 @@ const SAMPLE_ROWS = [
     },
     reasoningTrace: [
       {
-        comment: "A cozy Christmas Eve bedroom scene where a single child sits on their bed writing a Christmas wishlist in a notebook, .... ; warm, cinematic Christmas lighting emphasizes the contrast between imagination and reality.",
-        image: "./static/assets2/4/step_0.png",
+        comment: "Glacier-to-savannah cinematic panorama: icy side (blue ice, snow) has polar bear, arctic fox, woolly mammoth, white tiger in a straight line; ... Seamless transition, no barriers. Soft cinematic light, animated realism, epic scale.",
+        image: "./static/assets2/2/step_0.png",
       },
       {
-        comment: "Move the five novels from in front of the ducks to behind them, ensuring they are placed on the ground in the background while keeping all other elements in their correct positions.",
-        image: "./static/assets2/4/step_1.png",
+        comment: "Add a white tiger to the snowy icy side of the panorama, positioned on the ice to face the orange tiger on the grassy side. Adjust the placement of the animals to form two straight lines facing each other across the divide.",
+        image: "./static/assets2/2/step_1.png",
       },
       {
-        comment: "Edit the image to make space behind the ducks for novels, ensuring they are placed on the ground in the background while keeping all other elements in their correct positions.",
-        image: "./static/assets2/4/step_2.png",
-      },
-      {
-        comment: "Add one more novel behind the ducks, ensuring there are five novels in total and preserving the overall composition.",
-        image: "./static/assets2/4/step_3.png",
-      },
-      {
-        comment: "Edit the bottle held by the giraffe to have only a single knob, and ensure the entire image is in a cartoon style.",
-        image: "./static/assets2/4/step_4.png",
-      },
-      {
-        comment: "Edit the bottle held by the giraffe to have only a single knob, and ensure the entire image is in a cartoon style.",
-        image: "./static/assets2/4/step_5.png",
-      },
-      {
-        comment: "Edit the bottle held by the giraffe to have only a single knob, and ensure the entire image is in a cartoon style.",
-        image: "./static/assets2/4/step_6.png",
+        comment: "Remove the extra partial small brown bear between the elephant and brown bear. Ensure the transition between the icy and grassy environments remains seamless without any physical barriers.",
+        image: "./static/assets2/2/step_2.png",
       },
     ],
   },
@@ -536,47 +522,12 @@ const SAMPLE_ROWS = [
         image: "./static/assets2/6/step_3.png",
       },
       {
-        comment: "Edit the wall clock time to exactly show 12:00 at midnight with hour and minute hands both pointing to 12. Maintain the cinematic composition and festive mood of the scene.",
+        comment: "Edit the wall clock time to exactly show 12:00 with hour and minute hands both pointing to twelve on clock. Maintain the cinematic composition and festive mood of the scene.",
         image: "./static/assets2/6/step_4.png",
       },
     ],
   },
-  {
-    prompt: "A wide cinematic landscape where a glacier gradually melts into open savannah. On the icy side, near blue ice and drifting snow, four animals stand in a straight horizontal line: a polar bear, an arctic fox, a woolly mammoth, and a white tiger. On the grassy side, in warm sunlight, four animals stand in a matching straight horizontal line: a brown bear, a red fox, an elephant, and an orange tiger, framed by tall grass and scattered acacia trees. At the center, ice thins into wet rock and emerging grass, and each animal faces its direct counterpart across the transition—the polar bear faces the brown bear, the arctic fox faces the red fox, the woolly mammoth faces the elephant, and the white tiger faces the orange tiger. No visible barriers separate the two environments. Soft cinematic lighting, animated-movie realism, strong sense of scale, contrast, and wonder.",
-    images: {
-      qwen: "./static/assets2/2/qwen.png",
-      gpt: "./static/assets2/2/gpt.png",
-      nano: "./static/assets2/2/gemini.png",
-      ours: "./static/assets2/2/ours.png",
-    },
-    imageNotes: {
-      qwen: "Improper rendering and missing entities such as young boy on window.",
-      gpt: "Incorrect wall time, children not pointing to fireworks.",
-      nano: "Incorrect wall time, children not pointing to fireworks, missing child on shoulders.",
-      ours: "Aligned to prompt.",
-    },
-    imageNoteStatus: {
-      ours: "success",
-    },
-    reasoningTrace: [
-      {
-        comment: "A warm, animated-cartoon New Year’s night city scene viewed from street level, with tall buildings and a clear sky where fireworks spell..., and a joyful yet slightly reflective holiday mood.",
-        image: "./static/assets2/2/step_0.png",
-      },
-      {
-        comment: "Add a young boy standing at the window alongside the girl with both holding hot chocolate, ensuring both children are pointing at the fireworks while preserving the joyful mood and cinematic composition of the scene.",
-        image: "./static/assets2/2/step_1.png",
-      },
-      {
-        comment: "Add a young boy clearly visible on the window ledge alongside the girl with both holding hot chocolate, and pointing at the fireworks.",
-        image: "./static/assets2/2/step_2.png",
-      },
-      {
-        comment: "Make the 2026 in fireworks clearly visible in the sky while keeping all other details of the scene intact.",
-        image: "./static/assets2/2/step_3.png",
-      }
-    ],
-  },
+  
   {
     prompt: "A woman sits at a table, typing on a red laptop. A black chicken with a glass-like texture stands next to her. A large spider hangs from the ceiling above them. The image has an impressionist style.",
     images: {
@@ -609,6 +560,8 @@ const SAMPLE_ROWS = [
       },
     ],
   },
+  
+  
   
   {
     prompt:
@@ -652,38 +605,7 @@ const SAMPLE_ROWS = [
       },
     ],
   },
-  {
-    prompt: "A surreal landscape split perfectly down the vertical center: on the left, a bright daytime orchard with a large apple tree bearing exactly four red apples, one of which has a bite taken out, while a single ladder leans against the tree; on the right, a moonlit night desert with exactly six glowing paper lanterns floating at different heights, where only the lowest lantern is orange and the others are white. At the center boundary stands a stone fountain split in half, with water flowing upward on the night side and downward on the day side. A lone person walks along the dividing path wearing a coat split vertically, sunlit on the left and moonlit on the right, with their shadow cast only onto the day side.",
-    images: {
-      qwen: "./static/assets2/3/qwen.png",
-      gpt: "./static/assets2/3/gpt.png",
-      nano: "./static/assets2/3/gemini.png",
-      ours: "./static/assets2/3/ours.png",
-    },
-    imageNotes: {
-      qwen: "Incorrect number of apples and man not in center of contrast.",
-      gpt: "Man's shadow not on day side and on night side instead.",
-      nano: "Incorrect number of lanterns.",
-      ours: "Aligned to prompt.",
-    },
-    imageNoteStatus: {
-      ours: "success",
-    },
-    reasoningTrace: [
-      {
-        comment: "A surreal landscape split perfectly down the vertical center: on the left, a bright daytime orchard with a large apple tree bearing exactly four red apples, one of which has a bite taken out, ...., sunlit on the left and moonlit on the right, with their shadow cast only onto the day side.",
-        image: "./static/assets2/3/step_0.png",
-      },
-      {
-        comment: "Refine the black chicken standing next to the woman on the table, ensuring it has a reflective, glass-like, jewel-like texture, while maintaining the impressionist style of the overall scene.",
-        image: "./static/assets2/3/step_1.png",
-      },
-      {
-        comment: "Edit the black chicken on the table to clearly display a highly reflective, faceted, glass-like or crystalline texture, making it look like a black jewel sculpture, while preserving the impressionistic style of the surrounding scene.",
-        image: "./static/assets2/3/step_2.png",
-      },
-    ],
-  },
+  
   {
     prompt:
       "The image is a sketch showing three brown hills with a glass texture, positioned on the left side of a tree.",
@@ -722,6 +644,93 @@ const SAMPLE_ROWS = [
     ],
   },
   
+  {
+    prompt:
+      "The image features a heart-shaped giraffe, a tiny pink screwdriver, and a huge robot. The screwdriver is positioned at the bottom of the robot, touching it.",
+    images: {
+      qwen: "./static/assets/4/qwen.png",
+      gpt: "./static/assets/4/gpt.png",
+      nano: "./static/assets/4/gemini.png",
+      ours: "./static/assets/4/ours.png",
+    },
+    imageNotes: {
+      qwen: "Screwdriver not tiny and not touching robot.",
+      gpt: "Giraffe and robot conflated.",
+      nano: "Screwdriver not touching the robot.",
+      ours: "(Failure case) Giraffe not exactly heart-shaped.",
+    },
+    imageNoteStatus: {
+      ours: "failure",
+    },
+    reasoningTrace: [
+      {
+        comment:
+          "The image features a heart-shaped giraffe, a tiny pink screwdriver, and a huge robot. The screwdriver is positioned at the bottom of the robot, touching it.",
+        image: "./static/assets/4/step_0.png",
+      },
+      {
+        comment:
+          "Reposition the tiny pink screwdriver so that it is clearly touching the bottom surface of the huge robot's leg or foot.",
+        image: "./static/assets/4/step_1.png",
+      },
+      {
+        comment:
+          "Ensure the tiny pink screwdriver is visibly touching and pressed against the huge robot's foot or leg structure at the very bottom, confirming direct contact.",
+        image: "./static/assets/4/step_2.png",
+      },
+      {
+        comment:
+          "Introduce a tiny pink screwdriver lying on the ground, clearly touching and pressed against the lower armor plating or base structure of the huge robot's foot. Also, refine the giraffe's pose so that its neck and front legs clearly and symmetrically form a heart shape around its head.",
+        image: "./static/assets/4/step_3.png",
+      },
+      {
+        comment:
+          "Refine the image to ensure the tiny pink screwdriver is clearly making physical contact with the huge robot's foot. The screwdriver should appear pressed or resting against the lowest structural plate or base of the robot's foot, eliminating any gap between the screwdriver and the metallic surface.",
+        image: "./static/assets/4/step_4.png",
+      },
+    ],
+  },
+  {
+    prompt:
+      "A pixel art image shows a tiny pine tree with two carrots positioned in front of it. There is also a house in the scene.",
+    images: {
+      qwen: "./static/assets/5/qwen.png",
+      gpt: "./static/assets/5/gpt.png",
+      nano: "./static/assets/5/gemini.png",
+      ours: "./static/assets/5/ours.png",
+    },
+    imageNotes: {
+      qwen: "Pine tree remains large.",
+      gpt: "Pine tree remains largge",
+      nano: "Pine tree remains large.",
+      ours: "Failure case: Carrots not directly in front of pine.",
+    },
+    imageNoteStatus: {
+      ours: "failure",
+    },
+    reasoningTrace: [
+      {
+        comment:
+          "A pixel art image shows a tiny pine tree with two carrots positioned in front of it. There is also a house in the scene.",
+        image: "./static/assets/5/step_0.png",
+      },
+      {
+        comment:
+          "Edit the pixel art image by making the large pine tree significantly smaller to be tiny, while maintaining the position of the two carrots in front of it and the house in the scene.",
+        image: "./static/assets/5/step_1.png",
+      },
+      {
+        comment:
+          "Edit the image to clearly show exactly two distinct, standard-sized carrots. Reposition these two carrots so they are located directly in front of the base of the tiny pine tree, and ensure the house remains in the scene.",
+        image: "./static/assets/5/step_2.png",
+      },
+      {
+        comment:
+          "Edit the image to reposition the two distinct carrots so they are clearly located immediately and directly in front of the base of the tiny pine tree, ensuring the tiny pine tree and the house remain unchanged.",
+        image: "./static/assets/5/step_3.png",
+      },
+    ],
+  },
   {
     prompt:
       "An abstract image features a truck positioned lower in the scene, with a spider placed directly above it but not touching. Additionally, there is a chicken with a metallic texture present in the composition.",
@@ -769,13 +778,15 @@ const SAMPLE_ROWS = [
       ours: "./static/assets/8/ours.png",
     },
     imageNotes: {
-      qwen: "Apples are not purple.",
-      gpt: "Road not clearly triangular.",
-      nano: "Apples are not purple.",
+      qwen: "Road is not triangular.",
+      gpt: "Aligned to prompt.",
+      nano: "Aligned to prompt.",
       ours: "Aligned to prompt.",
     },
     imageNoteStatus: {
       ours: "success",
+      nano: "success",
+      gpt: "success",
     },
     reasoningTrace: [
       {
