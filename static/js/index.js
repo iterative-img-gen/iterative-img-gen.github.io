@@ -168,11 +168,11 @@ const SAMPLE_ROWS = [
         image: "./static/assets2/4/step_1.png",
       },
       {
-        comment: "Edit the image to make space behind the ducks for novels, ensuring they are placed on the ground in the background while keeping all other elements in their correct positions.",
+        comment: "Fix the spelling error in the notebook: write 'astronomy telecope' to 'astronomy telescope'. Remove a gift box from under the tree so there are exactly three wrappedgifts under the tree.",
         image: "./static/assets2/4/step_2.png",
       },
       {
-        comment: "Add one more novel behind the ducks, ensuring there are five novels in total and preserving the overall composition.",
+        comment: ".",
         image: "./static/assets2/4/step_3.png",
       },
       {
