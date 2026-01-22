@@ -192,7 +192,7 @@ const SAMPLE_ROWS = [
  
    
   {
-    prompt: "A wide cinematic landscape where a glacier gradually melts into open savannah. On the icy side, near blue ice and drifting snow, four animals stand in a straight horizontal line: a polar bear, an arctic fox, a woolly mammoth, and a white tiger. On the grassy side, in warm sunlight, four animals stand in a matching straight horizontal line: a brown bear, a red fox, an elephant, and an orange tiger, framed by tall grass and scattered acacia trees. At the center, ice thins into wet rock and emerging grass, and each animal faces its direct counterpart across the transition—the polar bear faces the brown bear, the arctic fox faces the red fox, the woolly mammoth faces the elephant, and the white tiger faces the orange tiger. No visible barriers separate the two environments. Soft cinematic lighting, animated-movie realism, strong sense of scale, contrast, and wonder.",
+    prompt: "Glacier-to-savannah cinematic panorama: icy side (blue ice, snow) has polar bear, arctic fox, woolly mammoth, white tiger in a straight line; warm grassy side has brown bear, red fox, elephant, orange tiger aligned opposite, each facing its counterpart. Seamless transition, no barriers. Soft cinematic light, animated realism, epic scale.",
     images: {
       qwen: "./static/assets2/2/qwen.png",
       gpt: "./static/assets2/2/gpt.png",
@@ -200,9 +200,9 @@ const SAMPLE_ROWS = [
       ours: "./static/assets2/2/ours.png",
     },
     imageNotes: {
-      qwen: "Improper rendering and missing entities such as young boy on window.",
-      gpt: "Incorrect wall time, children not pointing to fireworks.",
-      nano: "Incorrect wall time, children not pointing to fireworks, missing child on shoulders.",
+      qwen: "Missing animals and not on correct side of transition.",
+      gpt: "Missing animals and not on correct side of transition.",
+      nano: "Missing animals and not on correct side of transition.",
       ours: "Aligned to prompt.",
     },
     imageNoteStatus: {
@@ -214,17 +214,13 @@ const SAMPLE_ROWS = [
         image: "./static/assets2/2/step_0.png",
       },
       {
-        comment: "Add a young boy standing at the window alongside the girl with both holding hot chocolate, ensuring both children are pointing at the fireworks while preserving the joyful mood and cinematic composition of the scene.",
+        comment: "Add a white tiger to the snowy icy side of the panorama, positioned on the ice to face the orange tiger on the grassy side. Adjust the placement of the animals to form two straight lines facing each other across the divide.",
         image: "./static/assets2/2/step_1.png",
       },
       {
-        comment: "Add a young boy clearly visible on the window ledge alongside the girl with both holding hot chocolate, and pointing at the fireworks.",
+        comment: "Remove the extra small brown creature standing behind the elephant and ensure the transition between the icy and grassy environments remains seamless without any physical barriers.",
         image: "./static/assets2/2/step_2.png",
       },
-      {
-        comment: "Make the 2026 in fireworks clearly visible in the sky while keeping all other details of the scene intact.",
-        image: "./static/assets2/2/step_3.png",
-      }
     ],
   },
   
